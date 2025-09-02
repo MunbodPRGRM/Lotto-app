@@ -68,6 +68,8 @@ flutter:
     - assets/images/twitter_icon.png
     - assets/images/person_icon.png
     - assets/images/password_key.png
+    - assets/images/profile1.png
+    - assets/images/email_icon.png
     # - images/a_dot_burr.jpeg
     # - images/a_dot_ham.jpeg
 
