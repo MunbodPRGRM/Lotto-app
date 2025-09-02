@@ -51,7 +51,15 @@ class _LoadingPageState extends State<LoadingPage> {
                 ),
               ),
               const SizedBox(height: 97),
-              Image.asset('assets/images/vector.png', width: 286, height: 279),
+              // Image.asset('assets/images/vector.png', width: 286, height: 279),
+              const SizedBox(
+                width: 286,
+                height: 279,
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                  strokeWidth: 20.0,
+                ),
+              ),
             ],
           ),
         ),

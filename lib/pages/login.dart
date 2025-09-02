@@ -29,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
                 height: 276,
               ),
               const Text(
-                'Login Page',
+                'Lotto Application',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 36,
@@ -37,6 +37,7 @@ class _LoginPageState extends State<LoginPage> {
                   fontFamily: 'Righteous',
                 ),
               ),
+              const SizedBox(height: 20),
             ],
           ),
         ),
