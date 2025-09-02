@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lotto_app/pages/forgetpassword.dart';
+import 'package:lotto_app/pages/home.dart';
 import 'package:lotto_app/pages/register.dart';
 
 class LoginPage extends StatefulWidget {
@@ -139,9 +140,7 @@ class _LoginPageState extends State<LoginPage> {
                   width: 354,
                   height: 50,
                   child: ElevatedButton(
-                    onPressed: () {
-                      // Handle login action
-                    },
+                    onPressed: login,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
@@ -238,6 +237,13 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
       ),
+    );
+  }
+
+  void login() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const HomePage()),
     );
   }
 
