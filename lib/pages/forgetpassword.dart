@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:lotto_app/pages/forgetpassword.dart';
-import 'package:lotto_app/pages/register.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class ForgetPassword extends StatefulWidget {
+  const ForgetPassword({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<ForgetPassword> createState() => _ForgetPasswordState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _ForgetPasswordState extends State<ForgetPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,21 +24,7 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset(
-                  'assets/images/lotto_icon.png',
-                  width: 276,
-                  height: 276,
-                ),
-                const Text(
-                  'Lotto Application',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 36,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Righteous',
-                  ),
-                ),
-                const SizedBox(height: 64),
+                SizedBox(height: 50),
                 SizedBox(
                   width: 354,
                   height: 50,
@@ -86,7 +70,53 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 36),
+                const SizedBox(height: 30),
+                SizedBox(
+                  width: 354,
+                  height: 50,
+                  child: TextField(
+                    style: const TextStyle(
+                      color: Colors.white, // ตัวอักษรสีขาว
+                      fontSize: 18,
+                      fontFamily: 'Roboto',
+                    ),
+                    decoration: InputDecoration(
+                      prefixIcon: Padding(
+                        padding: const EdgeInsets.only(left: 20, right: 9),
+                        child: Image.asset(
+                          'assets/images/email_icon.png',
+                          width: 24,
+                          height: 27,
+                        ),
+                      ),
+                      hintText: 'Email',
+                      hintStyle: const TextStyle(
+                        color: Colors.white, // สี hint
+                      ),
+                      filled: true,
+                      fillColor: Colors.transparent, // ทำให้ใส
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                        borderSide: const BorderSide(
+                          color: Colors.white,
+                          width: 2,
+                        ), // ขอบสีขาว
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                        borderSide: const BorderSide(
+                          color: Colors.white,
+                          width: 3,
+                        ), // ขอบหนาขึ้นตอน focus
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 15,
+                        vertical: 15,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 30),
                 SizedBox(
                   width: 354,
                   height: 50,
@@ -134,13 +164,61 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 45),
+                const SizedBox(height: 30),
+                SizedBox(
+                  width: 354,
+                  height: 50,
+                  child: TextField(
+                    obscureText: true,
+                    style: const TextStyle(
+                      color: Colors.white, // ตัวอักษรสีขาว
+                      fontSize: 18,
+                      fontFamily: 'Roboto',
+                    ),
+                    decoration: InputDecoration(
+                      prefixIcon: Padding(
+                        padding: const EdgeInsets.only(left: 15, right: 9),
+                        child: Image.asset(
+                          'assets/images/password_key.png',
+                          width: 35,
+                          height: 35,
+                          color: Colors.white,
+                        ),
+                      ),
+                      hintText: 'Confirm Password',
+                      hintStyle: const TextStyle(
+                        color: Colors.white, // สี hint
+                      ),
+                      filled: true,
+                      fillColor: Colors.transparent, // ทำให้ใส
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                        borderSide: const BorderSide(
+                          color: Colors.white,
+                          width: 2,
+                        ), // ขอบสีขาว
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                        borderSide: const BorderSide(
+                          color: Colors.white,
+                          width: 3,
+                        ), // ขอบหนาขึ้นตอน focus
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 15,
+                        vertical: 15,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 30),
                 SizedBox(
                   width: 354,
                   height: 50,
                   child: ElevatedButton(
                     onPressed: () {
-                      // Handle login action
+                      // Add your onPressed code here!
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
@@ -149,43 +227,16 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     child: const Text(
-                      'Login',
+                      'Confirm',
                       style: TextStyle(
                         color: Color(0xFFFF1843),
-                        fontSize: 18,
+                        fontSize: 20,
                         fontFamily: 'Roboto',
                       ),
                     ),
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextButton(
-                      onPressed: forgotpassword,
-                      child: const Text(
-                        'Forgot Password?',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontFamily: 'Roboto',
-                        ),
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'Change Password.',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontFamily: 'Roboto',
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 50),
+                const SizedBox(height: 300),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   spacing: 35,
@@ -212,7 +263,7 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      "Don't have account?",
+                      "Did you have an account?",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 20,
@@ -220,9 +271,9 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     TextButton(
-                      onPressed: register,
+                      onPressed: login,
                       child: const Text(
-                        'Sign Up Now',
+                        'Login',
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -241,19 +292,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void forgotpassword() {
-    // Handle forgot password action
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const ForgetPassword()),
-    );
-  }
-
-  void register() {
-    // Navigate to the registration page
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const RegisterPage()),
-    );
+  void login() {
+    Navigator.pop(context);
   }
 }
