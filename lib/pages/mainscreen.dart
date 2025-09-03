@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lotto_app/model/response/user_login_post_res.dart';
 import 'package:lotto_app/pages/catalog.dart';
 import 'package:lotto_app/pages/home.dart';
+import 'package:lotto_app/pages/home_owner.dart';
 import 'package:lotto_app/pages/myticket.dart';
 import 'package:lotto_app/pages/profile.dart';
 import 'package:lotto_app/pages/redeem.dart';
@@ -26,13 +27,23 @@ class _MainScreenPageState extends State<MainScreenPage> {
     // TODO: implement initState
     super.initState();
 
-    pages = [
-      HomePage(user: widget.user, wallet: widget.wallet),
-      CatalogPage(),
-      MyTicketsPage(),
-      RedeemPage(),
-      ProfilePage(),
-    ];
+    if (widget.user.role == "owner") {
+      pages = [
+        HomeOwner(user: widget.user, wallet: widget.wallet),
+        CatalogPage(),
+        MyTicketsPage(),
+        RedeemPage(),
+        ProfilePage(),
+      ];
+    } else {
+      pages = [
+        HomePage(user: widget.user, wallet: widget.wallet),
+        CatalogPage(),
+        MyTicketsPage(),
+        RedeemPage(),
+        ProfilePage(),
+      ];
+    }
   }
 
   void onItemTapped(int index) {
@@ -62,22 +73,52 @@ class _MainScreenPageState extends State<MainScreenPage> {
           currentIndex: selectedIndex,
           onTap: onItemTapped,
           type: BottomNavigationBarType.fixed,
-          items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.list_alt),
-              label: "Catalog",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.confirmation_num),
-              label: "My Tickets",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.card_giftcard),
-              label: "Redeem",
-            ),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: "Account"),
-          ],
+          items:
+              widget.user.role == "owner"
+                  ? const [
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.home),
+                      label: "Home",
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.list_alt),
+                      label: "Catalog",
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.confirmation_num),
+                      label: "My Tickets",
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.card_giftcard),
+                      label: "Redeem",
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.person),
+                      label: "Profile",
+                    ),
+                  ]
+                  : const [
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.home),
+                      label: "Home",
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.list_alt),
+                      label: "Catalog",
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.confirmation_num),
+                      label: "My Tickets",
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.card_giftcard),
+                      label: "Redeem",
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.person),
+                      label: "Profile",
+                    ),
+                  ],
         ),
       ),
     );

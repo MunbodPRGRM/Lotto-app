@@ -262,7 +262,7 @@ class _LoginPageState extends State<LoginPage> {
             context,
             MaterialPageRoute(
               builder:
-                  (context) => HomeOwner(user: data.user, wallet: data.wallet),
+                  (context) => MainScreenPage(user: data.user, wallet: data.wallet),
             ),
           );
         } else {
