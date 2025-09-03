@@ -75,36 +75,6 @@ class _CatalogPageState extends State<CatalogPage> {
           );
         },
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.pink,
-        unselectedItemColor: Colors.grey,
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _currentIndex,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.list_alt,
-              color: Colors.pink, // ใส่สีชมพูตรงนี้
-            ),
-            label: "Catalog",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.confirmation_num),
-            label: "My Tickets",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.card_giftcard),
-            label: "Redeem",
-          ),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Account"),
-        ],
-      ),
     );
   }
 }

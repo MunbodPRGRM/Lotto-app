@@ -8,6 +8,7 @@ import 'package:lotto_app/model/response/user_login_post_res.dart';
 import 'package:lotto_app/pages/forgetpassword.dart';
 import 'package:lotto_app/pages/home.dart';
 import 'package:lotto_app/pages/home_owner.dart';
+import 'package:lotto_app/pages/mainscreen.dart';
 import 'package:lotto_app/pages/register.dart';
 
 class LoginPage extends StatefulWidget {
@@ -253,7 +254,8 @@ class _LoginPageState extends State<LoginPage> {
             context,
             MaterialPageRoute(
               builder:
-                  (context) => HomePage(user: data.user, wallet: data.wallet),
+                  (context) =>
+                      MainScreenPage(user: data.user, wallet: data.wallet),
             ),
           );
         } else if (data.user.role == "owner") {
