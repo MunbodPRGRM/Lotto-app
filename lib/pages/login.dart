@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:lotto_app/config/internal_config.dart';
+import 'package:lotto_app/model/request/user_login_post_req.dart';
 import 'package:lotto_app/pages/catalog.dart';
 import 'package:lotto_app/pages/forgetpassword.dart';
 import 'package:lotto_app/pages/home.dart';
+import 'package:lotto_app/pages/loading.dart';
 import 'package:lotto_app/pages/register.dart';
 
 class LoginPage extends StatefulWidget {
@@ -12,6 +16,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  TextEditingController usernameCtl = TextEditingController();
+  TextEditingController passwordCtl = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,6 +54,7 @@ class _LoginPageState extends State<LoginPage> {
                   width: 354,
                   height: 50,
                   child: TextField(
+                    controller: usernameCtl,
                     style: const TextStyle(
                       color: Colors.white, // ตัวอักษรสีขาว
                       fontSize: 18,
@@ -61,7 +69,7 @@ class _LoginPageState extends State<LoginPage> {
                           height: 27,
                         ),
                       ),
-                      hintText: 'Name',
+                      hintText: 'Username',
                       hintStyle: const TextStyle(
                         color: Colors.white, // สี hint
                       ),
@@ -93,6 +101,7 @@ class _LoginPageState extends State<LoginPage> {
                   width: 354,
                   height: 50,
                   child: TextField(
+                    controller: passwordCtl,
                     obscureText: true,
                     style: const TextStyle(
                       color: Colors.white, // ตัวอักษรสีขาว
@@ -242,10 +251,61 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void login() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const HomePage()),
+    UserLoginPostRequest req = UserLoginPostRequest(
+      username: usernameCtl.text,
+      password: passwordCtl.text,
     );
+
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (context) => const LoadingPage()),
+    );
+
+    http
+        .post(
+          Uri.parse('$API_ENDPOINT/users/login'),
+          headers: {'Content-Type': 'application/json; charset=UTF-8'},
+          body: userLoginPostRequestToJson(req),
+        )
+        .then((value) {
+          if (value.statusCode == 200) {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => const HomePage()),
+            );
+          } else {
+            // แสดงข้อความผิดพลาด
+            showDialog(
+              context: context,
+              builder:
+                  (context) => AlertDialog(
+                    title: const Text('Login Failed'),
+                    content: const Text('Invalid username or password.'),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: const Text('OK'),
+                      ),
+                    ],
+                  ),
+            );
+          }
+        })
+        .catchError((error) {
+          // Handle network or other errors
+          showDialog(
+            context: context,
+            builder:
+                (context) => AlertDialog(
+                  title: const Text('Error'),
+                  content: Text('An error occurred: $error'),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: const Text('OK'),
+                    ),
+                  ],
+                ),
+          );
+        });
   }
 
   void forgotpassword() {
