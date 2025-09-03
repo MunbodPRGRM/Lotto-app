@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:lotto_app/config/internal_config.dart';
+import 'package:lotto_app/model/request/user_register_post_req.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -8,6 +11,11 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  TextEditingController usernameCtl = TextEditingController();
+  TextEditingController emailCtl = TextEditingController();
+  TextEditingController passwordCtl = TextEditingController();
+  TextEditingController confirmPasswordCtl = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,6 +42,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   width: 354,
                   height: 50,
                   child: TextField(
+                    controller: usernameCtl,
                     style: const TextStyle(
                       color: Colors.white, // ตัวอักษรสีขาว
                       fontSize: 18,
@@ -48,7 +57,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           height: 27,
                         ),
                       ),
-                      hintText: 'Name',
+                      hintText: 'Username',
                       hintStyle: const TextStyle(
                         color: Colors.white, // สี hint
                       ),
@@ -80,6 +89,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   width: 354,
                   height: 50,
                   child: TextField(
+                    controller: emailCtl,
                     style: const TextStyle(
                       color: Colors.white, // ตัวอักษรสีขาว
                       fontSize: 18,
@@ -126,6 +136,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   width: 354,
                   height: 50,
                   child: TextField(
+                    controller: passwordCtl,
                     obscureText: true,
                     style: const TextStyle(
                       color: Colors.white, // ตัวอักษรสีขาว
@@ -174,6 +185,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   width: 354,
                   height: 50,
                   child: TextField(
+                    controller: confirmPasswordCtl,
                     obscureText: true,
                     style: const TextStyle(
                       color: Colors.white, // ตัวอักษรสีขาว
@@ -222,9 +234,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   width: 354,
                   height: 50,
                   child: ElevatedButton(
-                    onPressed: () {
-                      // Add your onPressed code here!
-                    },
+                    onPressed: register,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
@@ -241,29 +251,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 35),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  spacing: 35,
-                  children: [
-                    Image.asset(
-                      'assets/images/facebook_icon.png',
-                      width: 14.1,
-                      height: 29,
-                    ),
-                    Image.asset(
-                      'assets/images/twitter_icon.png',
-                      width: 35.67,
-                      height: 29,
-                    ),
-                    Image.asset(
-                      'assets/images/google_icon.png',
-                      width: 29.59,
-                      height: 29,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 80),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -295,6 +283,101 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
       ),
     );
+  }
+
+  void register() async {
+    if (passwordCtl.text == confirmPasswordCtl.text) {
+      UserRegisterPostRequest req = UserRegisterPostRequest(
+        email: emailCtl.text,
+        password: passwordCtl.text,
+        username: usernameCtl.text,
+      );
+
+      http
+          .post(
+            Uri.parse("$API_ENDPOINT/users/register"),
+            headers: {'Content-Type': 'application/json; charset=UTF-8'},
+            body: userRegisterPostRequestToJson(req),
+          )
+          .then((value) {
+            if (value.statusCode == 200) {
+              showDialog(
+                context: context,
+                builder:
+                    (context) => AlertDialog(
+                      title: const Text('Registration Successful'),
+                      content: const Text(
+                        'Your account has been created successfully.',
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context); // ปิด dialog
+                            Navigator.pop(context); // กลับไปหน้า login
+                          },
+                          child: const Text('OK'),
+                        ),
+                      ],
+                    ),
+              );
+            } else {
+              // print("Register Failed");
+              // print(response.body);
+              showDialog(
+                context: context,
+                builder:
+                    (context) => AlertDialog(
+                      title: const Text('Registration Failed'),
+                      content: const Text(
+                        'Please check your information and try again.',
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: const Text('OK'),
+                        ),
+                      ],
+                    ),
+              );
+            }
+          })
+          .catchError((error) {
+            // print("Error: $error");
+            showDialog(
+              context: context,
+              builder:
+                  (context) => AlertDialog(
+                    title: const Text('Error'),
+                    content: const Text(
+                      'An error occurred. Please try again later.',
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text('OK'),
+                      ),
+                    ],
+                  ),
+            );
+          });
+    } else {
+      showDialog(
+        context: context,
+        builder:
+            (context) => AlertDialog(
+              title: const Text('Password Mismatch'),
+              content: const Text(
+                'The passwords you entered do not match. Please try again.',
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('OK'),
+                ),
+              ],
+            ),
+      );
+    }
   }
 
   void login() {

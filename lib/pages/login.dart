@@ -4,7 +4,6 @@ import 'package:lotto_app/config/internal_config.dart';
 import 'package:lotto_app/model/request/user_login_post_req.dart';
 import 'package:lotto_app/pages/forgetpassword.dart';
 import 'package:lotto_app/pages/home.dart';
-import 'package:lotto_app/pages/loading.dart';
 import 'package:lotto_app/pages/register.dart';
 
 class LoginPage extends StatefulWidget {
@@ -227,14 +226,10 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void login() {
+  void login() async {
     UserLoginPostRequest req = UserLoginPostRequest(
       username: usernameCtl.text,
       password: passwordCtl.text,
-    );
-
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => const LoadingPage()),
     );
 
     http
