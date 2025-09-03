@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:lotto_app/model/response/user_login_post_res.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final User user;
+  final Wallet wallet;
+
+  const HomePage({super.key, required this.user, required this.wallet});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -13,23 +17,38 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.pink,
-        unselectedItemColor: Colors.grey,
-        type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.list_alt), label: "Catalog"),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.confirmation_num),
-            label: "My Tickets",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.card_giftcard),
-            label: "Redeem",
-          ),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Account"),
-        ],
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 8,
+              offset: const Offset(0, -2),
+            ),
+          ],
+        ),
+        child: BottomNavigationBar(
+          selectedItemColor: Colors.pink,
+          unselectedItemColor: Colors.grey,
+          type: BottomNavigationBarType.fixed,
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.list_alt),
+              label: "Catalog",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.confirmation_num),
+              label: "My Tickets",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.card_giftcard),
+              label: "Redeem",
+            ),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: "Account"),
+          ],
+        ),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -43,9 +62,9 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: [
                       Text(
-                        "Hello Joseph",
+                        "Hello ${widget.user.username}",
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -90,14 +109,14 @@ class _HomePageState extends State<HomePage> {
                         MainAxisAlignment.center, // จัดกลางแนวตั้ง
                     crossAxisAlignment:
                         CrossAxisAlignment.center, // จัดกลางแนวนอน
-                    children: const [
+                    children: [
                       Text(
                         "Total Money",
                         style: TextStyle(color: Colors.white70, fontSize: 16),
                       ),
                       SizedBox(height: 8),
                       Text(
-                        "120,000.00 Bath",
+                        "${widget.wallet.balance}.00 Bath",
                         style: TextStyle(
                           fontSize: 26,
                           fontWeight: FontWeight.bold,
@@ -123,7 +142,7 @@ class _HomePageState extends State<HomePage> {
 
               const SizedBox(height: 20),
 
-              /// Menu Buttons (รวมใน GridView เลย)
+              /// Menu Buttons
               GridView.count(
                 crossAxisCount: 3,
                 shrinkWrap: true,
@@ -134,10 +153,10 @@ class _HomePageState extends State<HomePage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
-                        Image(
-                          image: AssetImage('assets/images/lotto1.png'),
-                          width: 80,
-                          height: 80,
+                        Icon(
+                          Icons.calendar_view_month,
+                          size: 40,
+                          color: Colors.black,
                         ),
                         SizedBox(height: 6),
                         Text(
@@ -152,15 +171,15 @@ class _HomePageState extends State<HomePage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
-                        Image(
-                          image: AssetImage('assets/images/wallet1.png'),
-                          width: 80,
-                          height: 80,
+                        Icon(
+                          Icons.account_balance_wallet,
+                          size: 40,
+                          color: Colors.blue,
                         ),
                         SizedBox(height: 6),
                         Text(
                           "Wallet",
-                          style: TextStyle(fontSize: 14, color: Colors.blue),
+                          style: TextStyle(fontSize: 14, color: Colors.black),
                         ),
                       ],
                     ),
@@ -170,15 +189,15 @@ class _HomePageState extends State<HomePage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
-                        Image(
-                          image: AssetImage('assets/images/myticket1.png'),
-                          width: 80,
-                          height: 80,
+                        Icon(
+                          Icons.confirmation_num,
+                          size: 40,
+                          color: Colors.pink,
                         ),
                         SizedBox(height: 6),
                         Text(
                           "My Tickets",
-                          style: TextStyle(fontSize: 14, color: Colors.pink),
+                          style: TextStyle(fontSize: 14, color: Colors.black),
                         ),
                       ],
                     ),
@@ -188,15 +207,15 @@ class _HomePageState extends State<HomePage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
-                        Image(
-                          image: AssetImage('assets/images/redeem1.png'),
-                          width: 80,
-                          height: 80,
+                        Icon(
+                          Icons.card_giftcard,
+                          size: 40,
+                          color: Colors.amber,
                         ),
                         SizedBox(height: 6),
                         Text(
                           "Redeem",
-                          style: TextStyle(fontSize: 14, color: Colors.amber),
+                          style: TextStyle(fontSize: 14, color: Colors.black),
                         ),
                       ],
                     ),
@@ -206,18 +225,11 @@ class _HomePageState extends State<HomePage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
-                        Image(
-                          image: AssetImage('assets/images/profile_icon.png'),
-                          width: 80,
-                          height: 80,
-                        ),
+                        Icon(Icons.person, size: 40, color: Colors.blueAccent),
                         SizedBox(height: 6),
                         Text(
                           "Profile",
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.blueAccent,
-                          ),
+                          style: TextStyle(fontSize: 14, color: Colors.black),
                         ),
                       ],
                     ),

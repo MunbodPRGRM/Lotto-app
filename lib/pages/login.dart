@@ -1,9 +1,13 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:lotto_app/config/internal_config.dart';
 import 'package:lotto_app/model/request/user_login_post_req.dart';
+import 'package:lotto_app/model/response/user_login_post_res.dart';
 import 'package:lotto_app/pages/forgetpassword.dart';
 import 'package:lotto_app/pages/home.dart';
+import 'package:lotto_app/pages/home_owner.dart';
 import 'package:lotto_app/pages/register.dart';
 
 class LoginPage extends StatefulWidget {
@@ -226,49 +230,96 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  // void login() async {
+  //   UserLoginPostRequest req = UserLoginPostRequest(
+  //     username: usernameCtl.text,
+  //     password: passwordCtl.text,
+  //   );
+
+  //   http
+  //       .post(
+  //         Uri.parse('$API_ENDPOINT/users/login'),
+  //         headers: {'Content-Type': 'application/json; charset=UTF-8'},
+  //         body: userLoginPostRequestToJson(req),
+  //       )
+  //       .then((value) {
+  //         if (value.statusCode == 200) {
+  //           Navigator.of(context).pushReplacement(
+  //             MaterialPageRoute(builder: (context) => const HomePage()),
+  //           );
+  //         } else {
+  //           // แสดงข้อความผิดพลาด
+  //           showDialog(
+  //             context: context,
+  //             builder:
+  //                 (context) => AlertDialog(
+  //                   title: const Text('Login Failed'),
+  //                   content: const Text('Invalid username or password.'),
+  //                   actions: [
+  //                     TextButton(
+  //                       onPressed: () => Navigator.of(context).pop(),
+  //                       child: const Text('OK'),
+  //                     ),
+  //                   ],
+  //                 ),
+  //           );
+  //         }
+  //       })
+  //       .catchError((error) {
+  //         // Handle network or other errors
+  //         showDialog(
+  //           context: context,
+  //           builder:
+  //               (context) => AlertDialog(
+  //                 title: const Text('Error'),
+  //                 content: Text('An error occurred: $error'),
+  //                 actions: [
+  //                   TextButton(
+  //                     onPressed: () => Navigator.of(context).pop(),
+  //                     child: const Text('OK'),
+  //                   ),
+  //                 ],
+  //               ),
+  //         );
+  //       });
+  // }
+
   void login() async {
     UserLoginPostRequest req = UserLoginPostRequest(
       username: usernameCtl.text,
       password: passwordCtl.text,
     );
 
-    http
-        .post(
-          Uri.parse('$API_ENDPOINT/users/login'),
-          headers: {'Content-Type': 'application/json; charset=UTF-8'},
-          body: userLoginPostRequestToJson(req),
-        )
-        .then((value) {
-          if (value.statusCode == 200) {
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => const HomePage()),
-            );
-          } else {
-            // แสดงข้อความผิดพลาด
-            showDialog(
-              context: context,
-              builder:
-                  (context) => AlertDialog(
-                    title: const Text('Login Failed'),
-                    content: const Text('Invalid username or password.'),
-                    actions: [
-                      TextButton(
-                        onPressed: () => Navigator.of(context).pop(),
-                        child: const Text('OK'),
-                      ),
-                    ],
-                  ),
-            );
-          }
-        })
-        .catchError((error) {
-          // Handle network or other errors
+    try {
+      final response = await http.post(
+        Uri.parse('$API_ENDPOINT/users/login'),
+        headers: {'Content-Type': 'application/json; charset=UTF-8'},
+        body: userLoginPostRequestToJson(req),
+      );
+      if (response.statusCode == 200) {
+        final data = userLoginPostResponseFromJson(response.body);
+
+        String token = data.token;
+        log("Login success, token: $token");
+
+        if (data.user.role == "member") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => HomePage(user: data.user, wallet: data.wallet,)),
+          );
+        } else if (data.user.role == "owner") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => HomeOwner(user: data.user, wallet: data.wallet,)),
+          );
+        } else {
+          // Handle unexpected role
           showDialog(
             context: context,
             builder:
                 (context) => AlertDialog(
                   title: const Text('Error'),
-                  content: Text('An error occurred: $error'),
+                  content: const Text('Unexpected user role.'),
                   actions: [
                     TextButton(
                       onPressed: () => Navigator.of(context).pop(),
@@ -277,7 +328,41 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 ),
           );
-        });
+        }
+      } else {
+        // Show error message for invalid credentials
+        showDialog(
+          context: context,
+          builder:
+              (context) => AlertDialog(
+                title: const Text('Login Failed'),
+                content: const Text('Invalid username or password.'),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: const Text('OK'),
+                  ),
+                ],
+              ),
+        );
+      }
+    } catch (error) {
+      // Network or other errors
+      showDialog(
+        context: context,
+        builder:
+            (context) => AlertDialog(
+              title: const Text('Error'),
+              content: Text('An error occurred: $error'),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: const Text('OK'),
+                ),
+              ],
+            ),
+      );
+    }
   }
 
   void forgotpassword() {
