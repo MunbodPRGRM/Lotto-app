@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lotto_app/pages/catalog.dart';
 import 'package:lotto_app/pages/forgetpassword.dart';
 import 'package:lotto_app/pages/home.dart';
 import 'package:lotto_app/pages/register.dart';
