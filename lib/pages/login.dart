@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:lotto_app/config/internal_config.dart';
 import 'package:lotto_app/model/request/user_login_post_req.dart';
-import 'package:lotto_app/pages/catalog.dart';
 import 'package:lotto_app/pages/forgetpassword.dart';
 import 'package:lotto_app/pages/home.dart';
 import 'package:lotto_app/pages/loading.dart';
