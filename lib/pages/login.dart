@@ -6,7 +6,6 @@ import 'package:lotto_app/config/internal_config.dart';
 import 'package:lotto_app/model/request/user_login_post_req.dart';
 import 'package:lotto_app/model/response/user_login_post_res.dart';
 import 'package:lotto_app/pages/forgetpassword.dart';
-import 'package:lotto_app/pages/home.dart';
 import 'package:lotto_app/pages/home_owner.dart';
 import 'package:lotto_app/pages/mainscreen.dart';
 import 'package:lotto_app/pages/register.dart';

@@ -8,8 +8,6 @@ class CatalogPage extends StatefulWidget {
 }
 
 class _CatalogPageState extends State<CatalogPage> {
-  int _currentIndex = 1; // กำหนดค่าเริ่มต้นเป็น 1 เพื่อให้ 'Catalog' ถูกเลือก
-
   final List<String> items = List.generate(6, (index) => "Item $index");
 
   @override

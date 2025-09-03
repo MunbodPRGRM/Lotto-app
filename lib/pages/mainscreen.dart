@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lotto_app/model/response/user_login_post_res.dart';
-import 'package:lotto_app/pages/account.dart';
 import 'package:lotto_app/pages/catalog.dart';
 import 'package:lotto_app/pages/home.dart';
 import 'package:lotto_app/pages/myticket.dart';
+import 'package:lotto_app/pages/profile.dart';
 import 'package:lotto_app/pages/redeem.dart';
 
 class MainScreenPage extends StatefulWidget {
@@ -31,7 +31,7 @@ class _MainScreenPageState extends State<MainScreenPage> {
       CatalogPage(),
       MyTicketsPage(),
       RedeemPage(),
-      AccountPage(),
+      ProfilePage(),
     ];
   }
 
