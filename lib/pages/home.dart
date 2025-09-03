@@ -79,9 +79,11 @@ class _HomePageState extends State<HomePage> {
                   ),
                   const CircleAvatar(
                     radius: 20,
-                    backgroundImage: NetworkImage(
-                      "https://i.pravatar.cc/300",
-                    ), // ใช้แทนรูปโปรไฟล์
+                    backgroundColor: Colors.blueAccent, // สีพื้นหลังวงกลม
+                    child: Icon(
+                      Icons.person, // ไอคอนที่ต้องการ
+                      color: Colors.white, // สีของไอคอน
+                    ),
                   ),
                 ],
               ),
@@ -94,7 +96,7 @@ class _HomePageState extends State<HomePage> {
                   width: 392,
                   height: 180,
                   decoration: BoxDecoration(
-                    color: Colors.pinkAccent,
+                    color: Color(0xFFFF607D),
                     borderRadius: BorderRadius.circular(20), // มุมโค้งมน
                     boxShadow: [
                       BoxShadow(
@@ -153,11 +155,7 @@ class _HomePageState extends State<HomePage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
-                        Icon(
-                          Icons.calendar_view_month,
-                          size: 40,
-                          color: Colors.black,
-                        ),
+                        Icon(Icons.list_alt, size: 40, color: Colors.black),
                         SizedBox(height: 6),
                         Text(
                           "Lotto",

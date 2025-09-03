@@ -230,60 +230,6 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  // void login() async {
-  //   UserLoginPostRequest req = UserLoginPostRequest(
-  //     username: usernameCtl.text,
-  //     password: passwordCtl.text,
-  //   );
-
-  //   http
-  //       .post(
-  //         Uri.parse('$API_ENDPOINT/users/login'),
-  //         headers: {'Content-Type': 'application/json; charset=UTF-8'},
-  //         body: userLoginPostRequestToJson(req),
-  //       )
-  //       .then((value) {
-  //         if (value.statusCode == 200) {
-  //           Navigator.of(context).pushReplacement(
-  //             MaterialPageRoute(builder: (context) => const HomePage()),
-  //           );
-  //         } else {
-  //           // แสดงข้อความผิดพลาด
-  //           showDialog(
-  //             context: context,
-  //             builder:
-  //                 (context) => AlertDialog(
-  //                   title: const Text('Login Failed'),
-  //                   content: const Text('Invalid username or password.'),
-  //                   actions: [
-  //                     TextButton(
-  //                       onPressed: () => Navigator.of(context).pop(),
-  //                       child: const Text('OK'),
-  //                     ),
-  //                   ],
-  //                 ),
-  //           );
-  //         }
-  //       })
-  //       .catchError((error) {
-  //         // Handle network or other errors
-  //         showDialog(
-  //           context: context,
-  //           builder:
-  //               (context) => AlertDialog(
-  //                 title: const Text('Error'),
-  //                 content: Text('An error occurred: $error'),
-  //                 actions: [
-  //                   TextButton(
-  //                     onPressed: () => Navigator.of(context).pop(),
-  //                     child: const Text('OK'),
-  //                   ),
-  //                 ],
-  //               ),
-  //         );
-  //       });
-  // }
-
   void login() async {
     UserLoginPostRequest req = UserLoginPostRequest(
       username: usernameCtl.text,
@@ -305,12 +251,18 @@ class _LoginPageState extends State<LoginPage> {
         if (data.user.role == "member") {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => HomePage(user: data.user, wallet: data.wallet,)),
+            MaterialPageRoute(
+              builder:
+                  (context) => HomePage(user: data.user, wallet: data.wallet),
+            ),
           );
         } else if (data.user.role == "owner") {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => HomeOwner(user: data.user, wallet: data.wallet,)),
+            MaterialPageRoute(
+              builder:
+                  (context) => HomeOwner(user: data.user, wallet: data.wallet),
+            ),
           );
         } else {
           // Handle unexpected role
