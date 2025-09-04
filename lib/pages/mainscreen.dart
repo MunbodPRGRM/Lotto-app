@@ -33,7 +33,7 @@ class _MainScreenPageState extends State<MainScreenPage> {
         CatalogPage(),
         MyTicketsPage(),
         RedeemPage(),
-        ProfilePage(),
+        ProfilePage(user: widget.user, wallet: widget.wallet),
       ];
     } else {
       pages = [
@@ -41,7 +41,7 @@ class _MainScreenPageState extends State<MainScreenPage> {
         CatalogPage(),
         MyTicketsPage(),
         RedeemPage(),
-        ProfilePage(),
+        ProfilePage(user: widget.user, wallet: widget.wallet),
       ];
     }
   }

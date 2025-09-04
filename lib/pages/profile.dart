@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:lotto_app/model/response/user_login_post_res.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+  final User user;
+  final Wallet wallet;
+
+  const ProfilePage({super.key, required this.user, required this.wallet});
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  String gender = "Male";
-  TextEditingController firstNameCtl = TextEditingController(text: "meepo");
-  TextEditingController lastNameCtl = TextEditingController(text: "meepo");
-  TextEditingController emailCtl = TextEditingController(
-    text: "meepo22@gmail.com",
-  );
-  TextEditingController dobCtl = TextEditingController(
-    text: "10 November 2005",
-  );
+  late TextEditingController usernameCtl;
+  late TextEditingController emailCtl;
+
+  @override
+  void initState() {
+    super.initState();
+    usernameCtl = TextEditingController(text: widget.user.username);
+    emailCtl = TextEditingController(text: widget.user.email);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +34,14 @@ class _ProfilePageState extends State<ProfilePage> {
               children: [
                 Align(
                   alignment: Alignment.topRight,
-                  child: TextButton(
-                    onPressed: () {},
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xFFFEECEF),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
+                    onPressed: signout,
                     child: const Text(
                       "Sign out",
                       style: TextStyle(color: Colors.red),
@@ -42,49 +52,36 @@ class _ProfilePageState extends State<ProfilePage> {
                 Stack(
                   alignment: Alignment.bottomRight,
                   children: [
-                    const CircleAvatar(
-                      radius: 50,
-                      backgroundImage: NetworkImage(
-                        "https://i.pravatar.cc/300",
-                      ),
-                    ),
                     CircleAvatar(
-                      radius: 16,
-                      backgroundColor: Colors.pink,
-                      child: const Icon(
-                        Icons.edit,
-                        color: Colors.white,
-                        size: 18,
+                      radius: 50,
+                      backgroundColor:
+                          widget.user.role == "member"
+                              ? Colors.blueAccent
+                              : Colors.redAccent, // สีพื้นหลังวงกลม
+                      child: Icon(
+                        Icons.person, // ไอคอนที่ต้องการ
+                        color: Colors.white, // สีของไอคอน
+                        size: 90,
                       ),
                     ),
                   ],
                 ),
                 const SizedBox(height: 20),
-                buildTextField("First Name", firstNameCtl),
-                const SizedBox(height: 15),
-                buildTextField("Last Name", lastNameCtl),
-                const SizedBox(height: 15),
-                buildTextField("E-mail", emailCtl),
-                const SizedBox(height: 15),
-                buildTextField(
-                  "Date of Birth",
-                  dobCtl,
-                  suffix: const Icon(Icons.calendar_today, color: Colors.pink),
-                ),
-                const SizedBox(height: 20),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Gender",
-                    style: TextStyle(color: Colors.grey[700], fontSize: 14),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Row(
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    genderButton("Male"),
-                    const SizedBox(width: 10),
-                    genderButton("Female"),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text('Username', style: TextStyle(fontSize: 16)),
+                    ),
+                    buildTextField(usernameCtl),
+                    const SizedBox(height: 15),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text('Email'),
+                    ),
+                    buildTextField(emailCtl),
+                    const SizedBox(height: 15),
                   ],
                 ),
               ],
@@ -95,17 +92,15 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget buildTextField(
-    String label,
-    TextEditingController controller, {
-    Widget? suffix,
-  }) {
+  void signout() async {
+    Navigator.of(context).popUntil((route) => route.isFirst);
+  }
+
+  Widget buildTextField(TextEditingController textEditingController) {
     return TextField(
-      controller: controller,
+      controller: textEditingController,
       decoration: InputDecoration(
-        labelText: label,
         labelStyle: const TextStyle(color: Colors.grey),
-        suffixIcon: suffix,
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: Colors.pink),
           borderRadius: BorderRadius.circular(30),
@@ -113,33 +108,6 @@ class _ProfilePageState extends State<ProfilePage> {
         focusedBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: Colors.pink, width: 2),
           borderRadius: BorderRadius.circular(30),
-        ),
-      ),
-    );
-  }
-
-  Widget genderButton(String value) {
-    final isSelected = gender == value;
-    return Expanded(
-      child: OutlinedButton.icon(
-        onPressed: () {
-          setState(() {
-            gender = value;
-          });
-        },
-        icon:
-            isSelected
-                ? const Icon(Icons.check_circle, color: Colors.white)
-                : const Icon(Icons.circle_outlined, color: Colors.pink),
-        label: Text(value),
-        style: OutlinedButton.styleFrom(
-          padding: const EdgeInsets.symmetric(vertical: 14),
-          backgroundColor: isSelected ? Colors.pink : Colors.white,
-          foregroundColor: isSelected ? Colors.white : Colors.pink,
-          side: const BorderSide(color: Colors.pink),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
-          ),
         ),
       ),
     );
