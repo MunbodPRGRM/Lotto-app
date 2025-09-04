@@ -239,28 +239,6 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 const SizedBox(height: 300),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  spacing: 35,
-                  children: [
-                    Image.asset(
-                      'assets/images/facebook_icon.png',
-                      width: 14.1,
-                      height: 29,
-                    ),
-                    Image.asset(
-                      'assets/images/twitter_icon.png',
-                      width: 35.67,
-                      height: 29,
-                    ),
-                    Image.asset(
-                      'assets/images/google_icon.png',
-                      width: 29.59,
-                      height: 29,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
                       "Did you have an account?",
