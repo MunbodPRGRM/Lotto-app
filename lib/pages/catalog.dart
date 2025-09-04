@@ -23,7 +23,6 @@ class _CatalogPageState extends State<CatalogPage> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text(
                     "Catalog",
@@ -33,22 +32,23 @@ class _CatalogPageState extends State<CatalogPage> {
                       color: Colors.black,
                     ),
                   ),
-                  const SizedBox(height: 10),
-                  Container(
-                    height: 40,
-                    width: 290,
-                    decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        hintText: "Search",
-                        suffixIcon: const Icon(Icons.search),
-                        border: InputBorder.none,
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 30,
-                          vertical: 10,
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Container(
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintText: "Search",
+                          suffixIcon: const Icon(Icons.search),
+                          border: InputBorder.none,
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 10,
+                          ),
                         ),
                       ),
                     ),
@@ -64,11 +64,109 @@ class _CatalogPageState extends State<CatalogPage> {
         itemCount: items.length,
         itemBuilder: (context, index) {
           return Container(
-            height: 120,
+            height: 180,
             margin: const EdgeInsets.only(bottom: 12),
             decoration: BoxDecoration(
-              color: Colors.grey[300],
+              color: Colors.white,
               borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.2),
+                  blurRadius: 5,
+                  offset: const Offset(0, 3),
+                ),
+              ],
+            ),
+            child: Row(
+              children: [
+                // โลโก้ + ราคา
+                Container(
+                  width: 200,
+                  height: 180,
+                  decoration: BoxDecoration(
+                    color: Color(0xFFEDF4D0),
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(12),
+                      bottomLeft: Radius.circular(12),
+                    ),
+                  ),
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      // รูป
+                      Image.asset(
+                        'assets/images/lotto_icon.png',
+                        width: 150,
+                        height: 150,
+                      ),
+
+                      // ราคา (ทับบนรูป)
+                      const Positioned(
+                        bottom: 0,
+                        left: 10,
+                        child: Column(
+                          children: [
+                            Text(
+                              "80",
+                              style: TextStyle(
+                                color: Colors.pink,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                                height: 0.5,
+                              ),
+                            ),
+                            Text(
+                              'บาท',
+                              style: TextStyle(
+                                color: Colors.pink,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                // ข้อมูลลอตเตอรี่
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Color(0xFFD9D9D9),
+                      borderRadius: const BorderRadius.only(
+                        topRight: Radius.circular(12),
+                        bottomRight: Radius.circular(12),
+                      ),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          "123456",
+                          style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 25),
+                        Text(
+                          "1 พฤศจิกายน 2568\n1 November 2025",
+                          style: TextStyle(fontSize: 12),
+                        ),
+                        SizedBox(height: 30),
+                        Text(
+                          "งวดที่ 1 ชุดที่ 1",
+                          style: TextStyle(fontSize: 12),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
           );
         },
