@@ -66,7 +66,17 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 30),
+                Text(
+                  widget.user.role == "member"
+                      ? "สถานะ: สมาชิก"
+                      : "สถานะ: ผู้ดูแลระบบ",
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 30),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -83,28 +93,6 @@ class _ProfilePageState extends State<ProfilePage> {
                     buildTextField(emailCtl),
                     const SizedBox(height: 15),
                   ],
-                ),
-                const SizedBox(height: 270),
-                SizedBox(
-                  width: 354,
-                  height: 50,
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFFFEECEF),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                    ),
-                    child: const Text(
-                      'ยืนยัน',
-                      style: TextStyle(
-                        color: Color(0xFFFF1843),
-                        fontSize: 18,
-                        fontFamily: 'Roboto',
-                      ),
-                    ),
-                  ),
                 ),
               ],
             ),

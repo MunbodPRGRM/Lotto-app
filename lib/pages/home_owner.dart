@@ -23,7 +23,6 @@ class _HomeOwnerState extends State<HomeOwner> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              /// Header (Hello Joseph)
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -31,7 +30,7 @@ class _HomeOwnerState extends State<HomeOwner> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Hello ${widget.user.username} (${widget.user.role})",
+                        "Hello ${widget.user.username}",
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
