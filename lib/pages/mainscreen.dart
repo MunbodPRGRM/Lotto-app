@@ -30,16 +30,16 @@ class _MainScreenPageState extends State<MainScreenPage> {
     if (widget.user.role == "owner") {
       pages = [
         HomeOwner(user: widget.user, wallet: widget.wallet),
-        CatalogPage(),
-        MyTicketsPage(),
+        CatalogPage(user: widget.user, wallet: widget.wallet),
+        MyTicketsPage(user: widget.user, wallet: widget.wallet),
         RedeemPage(),
         ProfilePage(user: widget.user, wallet: widget.wallet),
       ];
     } else {
       pages = [
         HomePage(user: widget.user, wallet: widget.wallet),
-        CatalogPage(),
-        MyTicketsPage(),
+        CatalogPage(user: widget.user, wallet: widget.wallet),
+        MyTicketsPage(user: widget.user, wallet: widget.wallet),
         RedeemPage(),
         ProfilePage(user: widget.user, wallet: widget.wallet),
       ];

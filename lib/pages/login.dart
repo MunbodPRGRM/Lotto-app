@@ -234,9 +234,6 @@ class _LoginPageState extends State<LoginPage> {
       if (response.statusCode == 200) {
         final data = userLoginPostResponseFromJson(response.body);
 
-        String token = data.token;
-        log("Login success, token: $token");
-
         if (data.user.role == "member") {
           Navigator.push(
             context,
