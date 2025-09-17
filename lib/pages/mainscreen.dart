@@ -32,7 +32,7 @@ class _MainScreenPageState extends State<MainScreenPage> {
         HomeOwner(user: widget.user, wallet: widget.wallet),
         CatalogPage(user: widget.user, wallet: widget.wallet),
         MyTicketsPage(user: widget.user, wallet: widget.wallet),
-        RedeemPage(),
+        RedeemPage(user: widget.user, wallet: widget.wallet),
         ProfilePage(user: widget.user, wallet: widget.wallet),
       ];
     } else {
@@ -40,7 +40,7 @@ class _MainScreenPageState extends State<MainScreenPage> {
         HomePage(user: widget.user, wallet: widget.wallet),
         CatalogPage(user: widget.user, wallet: widget.wallet),
         MyTicketsPage(user: widget.user, wallet: widget.wallet),
-        RedeemPage(),
+        RedeemPage(user: widget.user, wallet: widget.wallet),
         ProfilePage(user: widget.user, wallet: widget.wallet),
       ];
     }

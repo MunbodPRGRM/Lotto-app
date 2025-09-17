@@ -44,7 +44,7 @@ class _CatalogDetailState extends State<CatalogDetail> {
         HomeOwner(user: widget.user, wallet: widget.wallet),
         CatalogPage(user: widget.user, wallet: widget.wallet),
         MyTicketsPage(user: widget.user, wallet: widget.wallet),
-        RedeemPage(),
+        RedeemPage(user: widget.user, wallet: widget.wallet),
         ProfilePage(user: widget.user, wallet: widget.wallet),
       ];
     } else {
@@ -52,7 +52,7 @@ class _CatalogDetailState extends State<CatalogDetail> {
         HomePage(user: widget.user, wallet: widget.wallet),
         CatalogPage(user: widget.user, wallet: widget.wallet),
         MyTicketsPage(user: widget.user, wallet: widget.wallet),
-        RedeemPage(),
+        RedeemPage(user: widget.user, wallet: widget.wallet),
         ProfilePage(user: widget.user, wallet: widget.wallet),
       ];
     }
