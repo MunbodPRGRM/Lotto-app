@@ -35,7 +35,6 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
         title: const Text("My Tickets"),
         centerTitle: true,
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
         foregroundColor: Colors.black,
       ),
       body: Column(
