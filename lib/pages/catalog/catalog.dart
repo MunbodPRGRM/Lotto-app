@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:lotto_app/config/internal_config.dart';
 import 'package:lotto_app/model/response/lotto_catalog_post_res.dart';
 import 'package:lotto_app/model/response/user_login_post_res.dart';
-import 'package:lotto_app/pages/catalog_detail.dart';
+import 'package:lotto_app/pages/catalog/catalog_detail.dart';
 
 class CatalogPage extends StatefulWidget {
   final User user;

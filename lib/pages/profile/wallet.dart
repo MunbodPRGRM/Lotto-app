@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:lotto_app/config/internal_config.dart';
 import 'package:lotto_app/model/response/user_login_post_res.dart';
 import 'package:lotto_app/model/response/wallet_balance_get_res.dart';
-import 'package:lotto_app/pages/search_bank.dart';
+import 'package:lotto_app/pages/other/search_bank.dart';
 
 class WalletPage extends StatefulWidget {
   final User user;

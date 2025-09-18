@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:lotto_app/config/internal_config.dart';
 import 'package:lotto_app/model/response/user_login_post_res.dart';
 import 'package:lotto_app/model/response/wallet_balance_get_res.dart';
-import 'package:lotto_app/pages/wallet.dart';
+import 'package:lotto_app/pages/profile/wallet.dart';
 
 class HomePage extends StatefulWidget {
   final User user;

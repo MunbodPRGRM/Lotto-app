@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:lotto_app/model/response/user_login_post_res.dart';
-import 'package:lotto_app/pages/catalog.dart';
-import 'package:lotto_app/pages/home.dart';
-import 'package:lotto_app/pages/home_owner.dart';
-import 'package:lotto_app/pages/myticket.dart';
-import 'package:lotto_app/pages/profile.dart';
-import 'package:lotto_app/pages/redeem.dart';
+import 'package:lotto_app/pages/catalog/catalog.dart';
+import 'package:lotto_app/pages/home/home.dart';
+import 'package:lotto_app/pages/home/home_owner.dart';
+import 'package:lotto_app/pages/profile/myticket.dart';
+import 'package:lotto_app/pages/profile/profile.dart';
+import 'package:lotto_app/pages/other/redeem.dart';
 
 class MainScreenPage extends StatefulWidget {
   final User user;

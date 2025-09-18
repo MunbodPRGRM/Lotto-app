@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lotto_app/pages/login.dart';
+import 'package:lotto_app/pages/auth/login.dart';
 
 class LoadingPage extends StatefulWidget {
   const LoadingPage({super.key});

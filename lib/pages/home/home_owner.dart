@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lotto_app/model/response/user_login_post_res.dart';
-import 'package:lotto_app/pages/create_draw_owner.dart';
-import 'package:lotto_app/pages/random_draw_owner.dart';
-import 'package:lotto_app/pages/system_owner.dart';
+import 'package:lotto_app/pages/system/create_draw_owner.dart';
+import 'package:lotto_app/pages/system/random_draw_owner.dart';
+import 'package:lotto_app/pages/system/system_owner.dart';
 
 class HomeOwner extends StatefulWidget {
   final User user;
