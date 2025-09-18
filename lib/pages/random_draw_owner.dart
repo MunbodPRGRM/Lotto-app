@@ -259,7 +259,7 @@ class _RandomDrawOwnerPageState extends State<RandomDrawOwnerPage> {
   }
 
   Future<void> confirmDraw(String mode) async {
-    if (previewResults == null || previewResults!.isEmpty) {
+    if (previewResults.isEmpty) {
       // ถ้าไม่มีผล preview → แจ้งเตือน
       showDialog(
         context: context,
