@@ -16,6 +16,8 @@ class CreateDrawOwnerPage extends StatefulWidget {
 
 class _CreateDrawOwnerPageState extends State<CreateDrawOwnerPage> {
   TextEditingController countCtl = TextEditingController();
+  TextEditingController _dateController = TextEditingController();
+  DateTime? _selectedDate;
 
   @override
   Widget build(BuildContext context) {
@@ -64,9 +66,12 @@ class _CreateDrawOwnerPageState extends State<CreateDrawOwnerPage> {
                 Expanded(
                   flex: 2,
                   child: TextField(
+                    controller: _dateController,
+                    readOnly: true,
+                    onTap: () => _selectDate(),
                     decoration: InputDecoration(
                       hintText: 'งวดที่',
-                      prefixIcon: const Icon(Icons.calendar_today),
+                      suffixIcon: const Icon(Icons.calendar_today),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
                         borderSide: BorderSide.none,
@@ -281,6 +286,21 @@ class _CreateDrawOwnerPageState extends State<CreateDrawOwnerPage> {
         ),
       ),
     );
+  }
+
+  Future<void> _selectDate() async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate ?? DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+    );
+    if (picked != null && picked != _selectedDate) {
+      setState(() {
+        _selectedDate = picked;
+        _dateController.text = "${picked.day}/${picked.month}/${picked.year}";
+      });
+    }
   }
 
   Future<void> createLotto() async {
