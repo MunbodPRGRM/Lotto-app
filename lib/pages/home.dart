@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:lotto_app/config/internal_config.dart';
 import 'package:lotto_app/model/response/user_login_post_res.dart';
+import 'package:lotto_app/model/response/wallet_balance_get_res.dart';
+import 'package:lotto_app/pages/wallet.dart';
 
 class HomePage extends StatefulWidget {
   final User user;
@@ -13,6 +17,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int selectedIndex = 0;
+  int _balance = 0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loadBalance();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +96,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       SizedBox(height: 8),
                       Text(
-                        "${widget.wallet.balance}.00 Bath",
+                        "${_balance.toString()}.00 Bath",
                         style: TextStyle(
                           fontSize: 26,
                           fontWeight: FontWeight.bold,
@@ -117,7 +129,7 @@ class _HomePageState extends State<HomePage> {
                 physics: const NeverScrollableScrollPhysics(),
                 children: [
                   TextButton(
-                    onPressed: () => print("Lotto clicked"),
+                    onPressed: () {},
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
@@ -131,7 +143,18 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   TextButton(
-                    onPressed: () => print("Wallet clicked"),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder:
+                              (context) => WalletPage(
+                                user: widget.user,
+                                wallet: widget.wallet,
+                              ),
+                        ),
+                      );
+                    },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
@@ -205,5 +228,24 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  Future<void> loadBalance() async {
+    try {
+      final res = await http.get(
+        Uri.parse("$API_ENDPOINT/wallet/${widget.user.id}/balance"),
+      );
+
+      if (res.statusCode == 200) {
+        final data = walletBalanceGetResponseFromJson(res.body);
+        setState(() {
+          _balance = data.balance;
+        });
+      } else {
+        print("Failed to load balance: ${res.body}");
+      }
+    } catch (e) {
+      print("Error: $e");
+    }
   }
 }
