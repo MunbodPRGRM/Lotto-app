@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lotto_app/model/response/user_login_post_res.dart';
+import 'package:lotto_app/pages/system_owner.dart';
 
 class HomeOwner extends StatefulWidget {
   final User user;
@@ -235,7 +236,15 @@ class _HomeOwnerState extends State<HomeOwner> {
                     ),
                   ),
                   TextButton(
-                    onPressed: () => print("System clicked"),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder:
+                              (context) => SystemOwnerPage(user: widget.user),
+                        ),
+                      );
+                    },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
