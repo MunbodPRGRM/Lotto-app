@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:lotto_app/config/internal_config.dart';
@@ -65,7 +67,9 @@ class _SystemOwnerPageState extends State<SystemOwnerPage> {
                 width: double.infinity,
                 height: 50,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    resetSystem();
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFF44336), // สีแดงอมชมพู
                     shape: RoundedRectangleBorder(
@@ -135,6 +139,76 @@ class _SystemOwnerPageState extends State<SystemOwnerPage> {
                   TextButton(
                     onPressed: () => Navigator.pop(context),
                     child: const Text("OK"),
+                  ),
+                ],
+              ),
+        );
+      } else {
+        showDialog(
+          context: context,
+          builder:
+              (_) => AlertDialog(
+                title: const Text("ผิดพลาด"),
+                content: Text("Error: ${response.body}"),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text("ปิด"),
+                  ),
+                ],
+              ),
+        );
+      }
+    } catch (e) {
+      debugPrint("Error: $e");
+    }
+  }
+
+  Future<void> resetSystem() async {
+    // ยืนยันก่อนลบ
+    final confirm = await showDialog<bool>(
+      context: context,
+      builder:
+          (_) => AlertDialog(
+            title: const Text("ยืนยัน"),
+            content: const Text(
+              "คุณแน่ใจหรือไม่ว่าต้องการรีเซ็ตระบบ? ข้อมูลผู้ใช้อื่นและ Lotto ทั้งหมดจะถูกลบ",
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context, false),
+                child: const Text("ยกเลิก"),
+              ),
+              TextButton(
+                onPressed: () => Navigator.pop(context, true),
+                child: const Text("ยืนยัน"),
+              ),
+            ],
+          ),
+    );
+
+    if (confirm != true) return; // ถ้าไม่ยืนยัน ให้หยุด
+
+    try {
+      final url = Uri.parse("$API_ENDPOINT/system/reset");
+      final response = await http.post(
+        url,
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({"owner_id": widget.user.id}),
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        showDialog(
+          context: context,
+          builder:
+              (_) => AlertDialog(
+                title: const Text("สำเร็จ"),
+                content: Text(data["message"]),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text("ปิด"),
                   ),
                 ],
               ),
