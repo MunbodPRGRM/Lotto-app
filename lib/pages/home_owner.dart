@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lotto_app/model/response/user_login_post_res.dart';
+import 'package:lotto_app/pages/create_draw_owner.dart';
 import 'package:lotto_app/pages/system_owner.dart';
 
 class HomeOwner extends StatefulWidget {
@@ -200,7 +201,16 @@ class _HomeOwnerState extends State<HomeOwner> {
                     ),
                   ),
                   TextButton(
-                    onPressed: () => print("Create Draw clicked"),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder:
+                              (context) =>
+                                  CreateDrawOwnerPage(user: widget.user),
+                        ),
+                      );
+                    },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
