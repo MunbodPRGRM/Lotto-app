@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:lotto_app/config/internal_config.dart';
 import 'package:lotto_app/model/response/user_login_post_res.dart';
+import 'package:lotto_app/model/response/wallet_balance_get_res.dart';
+import 'package:lotto_app/pages/profile/wallet.dart';
 import 'package:lotto_app/pages/system/create_draw_owner.dart';
 import 'package:lotto_app/pages/system/random_draw_owner.dart';
 import 'package:lotto_app/pages/system/system_owner.dart';
@@ -7,8 +11,14 @@ import 'package:lotto_app/pages/system/system_owner.dart';
 class HomeOwner extends StatefulWidget {
   final User user;
   final Wallet wallet;
+  final Function(int) onTabChange;
 
-  const HomeOwner({super.key, required this.user, required this.wallet});
+  const HomeOwner({
+    super.key,
+    required this.user,
+    required this.wallet,
+    required this.onTabChange,
+  });
 
   @override
   State<HomeOwner> createState() => _HomeOwnerState();
@@ -16,6 +26,14 @@ class HomeOwner extends StatefulWidget {
 
 class _HomeOwnerState extends State<HomeOwner> {
   int selectedIndex = 0;
+  int _balance = 0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loadBalance();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +105,7 @@ class _HomeOwnerState extends State<HomeOwner> {
                       ),
                       SizedBox(height: 8),
                       Text(
-                        "${widget.wallet.balance}.00 Bath",
+                        "${_balance.toString()}.00 Bath",
                         style: TextStyle(
                           fontSize: 26,
                           fontWeight: FontWeight.bold,
@@ -120,7 +138,9 @@ class _HomeOwnerState extends State<HomeOwner> {
                 physics: const NeverScrollableScrollPhysics(),
                 children: [
                   TextButton(
-                    onPressed: () => print("Lotto clicked"),
+                    onPressed: () {
+                      widget.onTabChange(1);
+                    },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
@@ -134,7 +154,18 @@ class _HomeOwnerState extends State<HomeOwner> {
                     ),
                   ),
                   TextButton(
-                    onPressed: () => print("Wallet clicked"),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder:
+                              (context) => WalletPage(
+                                user: widget.user,
+                                wallet: widget.wallet,
+                              ),
+                        ),
+                      );
+                    },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
@@ -152,7 +183,9 @@ class _HomeOwnerState extends State<HomeOwner> {
                     ),
                   ),
                   TextButton(
-                    onPressed: () => print("My Tickets clicked"),
+                    onPressed: () {
+                      widget.onTabChange(2);
+                    },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
@@ -170,7 +203,9 @@ class _HomeOwnerState extends State<HomeOwner> {
                     ),
                   ),
                   TextButton(
-                    onPressed: () => print("Redeem clicked"),
+                    onPressed: () {
+                      widget.onTabChange(3);
+                    },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
@@ -188,7 +223,9 @@ class _HomeOwnerState extends State<HomeOwner> {
                     ),
                   ),
                   TextButton(
-                    onPressed: () => print("Profile clicked"),
+                    onPressed: () {
+                      widget.onTabChange(4);
+                    },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
@@ -230,7 +267,12 @@ class _HomeOwnerState extends State<HomeOwner> {
                   ),
                   TextButton(
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => RandomDrawOwnerPage(),));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => RandomDrawOwnerPage(),
+                        ),
+                      );
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -277,5 +319,24 @@ class _HomeOwnerState extends State<HomeOwner> {
         ),
       ),
     );
+  }
+
+  Future<void> loadBalance() async {
+    try {
+      final res = await http.get(
+        Uri.parse("$API_ENDPOINT/wallet/${widget.user.id}/balance"),
+      );
+
+      if (res.statusCode == 200) {
+        final data = walletBalanceGetResponseFromJson(res.body);
+        setState(() {
+          _balance = data.balance;
+        });
+      } else {
+        print("Failed to load balance: ${res.body}");
+      }
+    } catch (e) {
+      print("Error: $e");
+    }
   }
 }

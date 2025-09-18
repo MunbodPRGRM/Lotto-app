@@ -20,30 +20,72 @@ class MainScreenPage extends StatefulWidget {
 class _MainScreenPageState extends State<MainScreenPage> {
   int selectedIndex = 0;
 
-  late final List<Widget> pages;
+  final List<Widget Function()> ownerPages = [];
+  final List<Widget Function()> memberPages = [];
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
-    if (widget.user.role == "owner") {
-      pages = [
-        HomeOwner(user: widget.user, wallet: widget.wallet),
-        CatalogPage(user: widget.user, wallet: widget.wallet),
-        MyTicketsPage(user: widget.user, wallet: widget.wallet),
-        RedeemPage(user: widget.user, wallet: widget.wallet),
-        ProfilePage(user: widget.user, wallet: widget.wallet),
-      ];
-    } else {
-      pages = [
-        HomePage(user: widget.user, wallet: widget.wallet),
-        CatalogPage(user: widget.user, wallet: widget.wallet),
-        MyTicketsPage(user: widget.user, wallet: widget.wallet),
-        RedeemPage(user: widget.user, wallet: widget.wallet),
-        ProfilePage(user: widget.user, wallet: widget.wallet),
-      ];
-    }
+    ownerPages.addAll([
+      () => HomeOwner(
+        user: widget.user,
+        wallet: widget.wallet,
+        onTabChange: onItemTapped,
+        key: UniqueKey(),
+      ),
+      () => CatalogPage(
+        user: widget.user,
+        wallet: widget.wallet,
+        key: UniqueKey(),
+      ),
+      () => MyTicketsPage(
+        user: widget.user,
+        wallet: widget.wallet,
+        key: UniqueKey(),
+      ),
+      () => RedeemPage(
+        user: widget.user,
+        wallet: widget.wallet,
+        key: UniqueKey(),
+      ),
+      () => ProfilePage(
+        user: widget.user,
+        wallet: widget.wallet,
+        onTabChange: onItemTapped,
+        key: UniqueKey(),
+      ),
+    ]);
+
+    memberPages.addAll([
+      () => HomePage(
+        user: widget.user,
+        wallet: widget.wallet,
+        onTabChange: onItemTapped,
+        key: UniqueKey(),
+      ),
+      () => CatalogPage(
+        user: widget.user,
+        wallet: widget.wallet,
+        key: UniqueKey(),
+      ),
+      () => MyTicketsPage(
+        user: widget.user,
+        wallet: widget.wallet,
+        key: UniqueKey(),
+      ),
+      () => RedeemPage(
+        user: widget.user,
+        wallet: widget.wallet,
+        key: UniqueKey(),
+      ),
+      () => ProfilePage(
+        user: widget.user,
+        wallet: widget.wallet,
+        onTabChange: onItemTapped,
+        key: UniqueKey(),
+      ),
+    ]);
   }
 
   void onItemTapped(int index) {
@@ -54,8 +96,20 @@ class _MainScreenPageState extends State<MainScreenPage> {
 
   @override
   Widget build(BuildContext context) {
+    final pages = widget.user.role == "owner" ? ownerPages : memberPages;
+
     return Scaffold(
-      body: pages[selectedIndex],
+      body: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 300), // ⏱ ความเร็วแอนิเมชัน
+        transitionBuilder: (child, animation) {
+          return FadeTransition(
+            // 🔥 เปลี่ยนได้เป็น SlideTransition ถ้าอยากเลื่อน
+            opacity: animation,
+            child: child,
+          );
+        },
+        child: pages[selectedIndex](),
+      ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -73,52 +127,22 @@ class _MainScreenPageState extends State<MainScreenPage> {
           currentIndex: selectedIndex,
           onTap: onItemTapped,
           type: BottomNavigationBarType.fixed,
-          items:
-              widget.user.role == "owner"
-                  ? const [
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.home),
-                      label: "Home",
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.list_alt),
-                      label: "Catalog",
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.confirmation_num),
-                      label: "My Tickets",
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.card_giftcard),
-                      label: "Redeem",
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.person),
-                      label: "Profile",
-                    ),
-                  ]
-                  : const [
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.home),
-                      label: "Home",
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.list_alt),
-                      label: "Catalog",
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.confirmation_num),
-                      label: "My Tickets",
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.card_giftcard),
-                      label: "Redeem",
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.person),
-                      label: "Profile",
-                    ),
-                  ],
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.list_alt),
+              label: "Catalog",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.confirmation_num),
+              label: "My Tickets",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.card_giftcard),
+              label: "Redeem",
+            ),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
+          ],
         ),
       ),
     );

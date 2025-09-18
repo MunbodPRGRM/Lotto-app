@@ -4,8 +4,14 @@ import 'package:lotto_app/model/response/user_login_post_res.dart';
 class ProfilePage extends StatefulWidget {
   final User user;
   final Wallet wallet;
+  final Function(int) onTabChange;
 
-  const ProfilePage({super.key, required this.user, required this.wallet});
+  const ProfilePage({
+    super.key,
+    required this.user,
+    required this.wallet,
+    required this.onTabChange,
+  });
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();

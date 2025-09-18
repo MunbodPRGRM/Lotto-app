@@ -5,13 +5,6 @@ import 'package:http/http.dart' as http;
 import 'package:lotto_app/config/internal_config.dart';
 import 'package:lotto_app/model/response/lotto_catalog_post_res.dart';
 import 'package:lotto_app/model/response/user_login_post_res.dart';
-import 'package:lotto_app/pages/catalog/catalog.dart';
-import 'package:lotto_app/pages/home/home.dart';
-import 'package:lotto_app/pages/home/home_owner.dart';
-import 'package:lotto_app/pages/mainscreen.dart';
-import 'package:lotto_app/pages/profile/myticket.dart';
-import 'package:lotto_app/pages/profile/profile.dart';
-import 'package:lotto_app/pages/other/redeem.dart';
 
 class CatalogDetail extends StatefulWidget {
   final User user;
@@ -37,43 +30,6 @@ class _CatalogDetailState extends State<CatalogDetail> {
   @override
   void initState() {
     super.initState();
-
-    // สร้างลิสต์ของหน้าเพจเหมือนกับใน MainScreenPage
-    if (widget.user.role == "owner") {
-      pages = [
-        HomeOwner(user: widget.user, wallet: widget.wallet),
-        CatalogPage(user: widget.user, wallet: widget.wallet),
-        MyTicketsPage(user: widget.user, wallet: widget.wallet),
-        RedeemPage(user: widget.user, wallet: widget.wallet),
-        ProfilePage(user: widget.user, wallet: widget.wallet),
-      ];
-    } else {
-      pages = [
-        HomePage(user: widget.user, wallet: widget.wallet),
-        CatalogPage(user: widget.user, wallet: widget.wallet),
-        MyTicketsPage(user: widget.user, wallet: widget.wallet),
-        RedeemPage(user: widget.user, wallet: widget.wallet),
-        ProfilePage(user: widget.user, wallet: widget.wallet),
-      ];
-    }
-  }
-
-  void onItemTapped(int index) {
-    setState(() {
-      selectedIndex = index;
-    });
-    // ใช้ Navigator เพื่อย้อนกลับไปหน้าหลักที่มี BottomNavigationBar
-    // และเปลี่ยน tab ไปตาม index ที่เลือก
-    Navigator.pop(context); // pop หน้า CatalogDetail นี้ออก
-    // และ push หน้า MainScreenPage กลับเข้าไปใหม่ พร้อมกับ index ที่เลือก
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder:
-            (context) =>
-                MainScreenPage(user: widget.user, wallet: widget.wallet),
-      ),
-    );
   }
 
   @override
@@ -88,7 +44,6 @@ class _CatalogDetailState extends State<CatalogDetail> {
           },
         ),
         title: const Text('Lotto details'),
-        backgroundColor: Colors.white,
         elevation: 0,
       ),
 
@@ -229,7 +184,7 @@ class _CatalogDetailState extends State<CatalogDetail> {
               ),
             ),
 
-            const SizedBox(height: 430),
+            const SizedBox(height: 500),
 
             // ปุ่ม "Buy a ticket"
             SizedBox(
@@ -255,62 +210,6 @@ class _CatalogDetailState extends State<CatalogDetail> {
             ),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.pink,
-        unselectedItemColor: Colors.grey,
-        currentIndex: selectedIndex,
-        onTap: (index) {
-          // ไม่ต้อง setState() เพราะเราจะ pop และ push หน้าใหม่เลย
-          Navigator.pop(context);
-        },
-        type: BottomNavigationBarType.fixed,
-        items:
-            widget.user.role == "owner"
-                ? const [
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.home),
-                    label: "Home",
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.list_alt),
-                    label: "Catalog",
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.confirmation_num),
-                    label: "My Tickets",
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.card_giftcard),
-                    label: "Redeem",
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.person),
-                    label: "Profile",
-                  ),
-                ]
-                : const [
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.home),
-                    label: "Home",
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.list_alt),
-                    label: "Catalog",
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.confirmation_num),
-                    label: "My Tickets",
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.card_giftcard),
-                    label: "Redeem",
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.person),
-                    label: "Profile",
-                  ),
-                ],
       ),
     );
   }

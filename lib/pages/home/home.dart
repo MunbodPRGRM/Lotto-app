@@ -8,8 +8,14 @@ import 'package:lotto_app/pages/profile/wallet.dart';
 class HomePage extends StatefulWidget {
   final User user;
   final Wallet wallet;
+  final Function(int) onTabChange;
 
-  const HomePage({super.key, required this.user, required this.wallet});
+  const HomePage({
+    super.key,
+    required this.user,
+    required this.wallet,
+    required this.onTabChange,
+  });
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -129,7 +135,9 @@ class _HomePageState extends State<HomePage> {
                 physics: const NeverScrollableScrollPhysics(),
                 children: [
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      widget.onTabChange(1);
+                    },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
@@ -172,7 +180,9 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   TextButton(
-                    onPressed: () => print("My Tickets clicked"),
+                    onPressed: () {
+                      widget.onTabChange(2);
+                    },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
@@ -190,7 +200,9 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   TextButton(
-                    onPressed: () => print("Redeem clicked"),
+                    onPressed: () {
+                      widget.onTabChange(3);
+                    },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
@@ -208,7 +220,9 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   TextButton(
-                    onPressed: () => print("Profile clicked"),
+                    onPressed: () {
+                      widget.onTabChange(4);
+                    },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
