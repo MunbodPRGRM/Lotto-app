@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:lotto_app/config/internal_config.dart';
 
 class ForgetPassword extends StatefulWidget {
   const ForgetPassword({super.key});
@@ -8,6 +12,11 @@ class ForgetPassword extends StatefulWidget {
 }
 
 class _ForgetPasswordState extends State<ForgetPassword> {
+  TextEditingController nameCtl = TextEditingController();
+  TextEditingController emailCtl = TextEditingController();
+  TextEditingController passwordCtl = TextEditingController();
+  TextEditingController confirmPasswordCtl = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,6 +38,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   width: 354,
                   height: 50,
                   child: TextField(
+                    controller: nameCtl,
                     style: const TextStyle(
                       color: Colors.white, // ตัวอักษรสีขาว
                       fontSize: 18,
@@ -43,7 +53,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                           height: 27,
                         ),
                       ),
-                      hintText: 'Name',
+                      hintText: 'Username',
                       hintStyle: const TextStyle(
                         color: Colors.white, // สี hint
                       ),
@@ -75,6 +85,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   width: 354,
                   height: 50,
                   child: TextField(
+                    controller: emailCtl,
                     style: const TextStyle(
                       color: Colors.white, // ตัวอักษรสีขาว
                       fontSize: 18,
@@ -121,6 +132,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   width: 354,
                   height: 50,
                   child: TextField(
+                    controller: passwordCtl,
                     obscureText: true,
                     style: const TextStyle(
                       color: Colors.white, // ตัวอักษรสีขาว
@@ -169,6 +181,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   width: 354,
                   height: 50,
                   child: TextField(
+                    controller: confirmPasswordCtl,
                     obscureText: true,
                     style: const TextStyle(
                       color: Colors.white, // ตัวอักษรสีขาว
@@ -218,7 +231,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   height: 50,
                   child: ElevatedButton(
                     onPressed: () {
-                      // Add your onPressed code here!
+                      resetPassword();
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
@@ -272,5 +285,66 @@ class _ForgetPasswordState extends State<ForgetPassword> {
 
   void login() {
     Navigator.pop(context);
+  }
+
+  Future<void> resetPassword() async {
+    final name = nameCtl.text.trim();
+    final email = emailCtl.text.trim();
+    final password = passwordCtl.text.trim();
+    final confirmPassword = confirmPasswordCtl.text.trim();
+
+    if (name.isEmpty ||
+        email.isEmpty ||
+        password.isEmpty ||
+        confirmPassword.isEmpty) {
+      showAlert("Error", "กรุณากรอกข้อมูลให้ครบทุกช่อง");
+      return;
+    }
+
+    if (password != confirmPassword) {
+      showAlert("Error", "รหัสผ่านไม่ตรงกัน");
+      return;
+    }
+
+    try {
+      final url = Uri.parse("$API_ENDPOINT/users/reset-password");
+      final response = await http.post(
+        url,
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({
+          "name": name,
+          "email": email,
+          "password": password,
+          "confirmPassword": confirmPassword,
+        }),
+      );
+
+      final data = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        showAlert("สำเร็จ", data['message']);
+      } else {
+        showAlert("Error", data['error'] ?? "เกิดข้อผิดพลาด");
+      }
+    } catch (e) {
+      showAlert("Error", e.toString());
+    }
+  }
+
+  void showAlert(String title, String message) {
+    showDialog(
+      context: context,
+      builder:
+          (_) => AlertDialog(
+            title: Text(title),
+            content: Text(message),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text("OK"),
+              ),
+            ],
+          ),
+    );
   }
 }
