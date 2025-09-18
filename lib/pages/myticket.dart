@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:lotto_app/config/internal_config.dart';
+import 'package:lotto_app/model/response/lotto_check_get_res.dart';
 import 'package:lotto_app/model/response/user_login_post_res.dart';
 import 'package:lotto_app/model/response/user_lotto_get_res.dart';
 
@@ -70,110 +71,116 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
               itemCount: filteredUserLotto.length,
               itemBuilder: (context, index) {
                 final lotto = filteredUserLotto[index];
-                return Container(
-                  height: 180,
-                  margin: const EdgeInsets.only(bottom: 12),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.2),
-                        blurRadius: 5,
-                        offset: const Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    children: [
-                      // โลโก้ + ราคา
-                      Container(
-                        width: 200,
-                        height: 180,
-                        decoration: BoxDecoration(
-                          color: Color(0xFFEDF4D0),
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(12),
-                            bottomLeft: Radius.circular(12),
-                          ),
-                        ),
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            // รูป
-                            Image.asset(
-                              'assets/images/lotto_icon.png',
-                              width: 150,
-                              height: 150,
-                            ),
 
-                            // ราคา (ทับบนรูป)
-                            Positioned(
-                              bottom: 0,
-                              left: 10,
-                              child: Column(
-                                children: [
-                                  Text(
-                                    lotto.price.toString(),
-                                    style: TextStyle(
-                                      color: Colors.pink,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                      height: 0.5,
-                                    ),
-                                  ),
-                                  Text(
-                                    'บาท',
-                                    style: TextStyle(
-                                      color: Colors.pink,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
+                return InkWell(
+                  onTap: () {
+                    checkUserLotto(lotto.number);
+                  },
+                  child: Container(
+                    height: 180,
+                    margin: const EdgeInsets.only(bottom: 12),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.2),
+                          blurRadius: 5,
+                          offset: const Offset(0, 3),
                         ),
-                      ),
-
-                      // ข้อมูลลอตเตอรี่
-                      Expanded(
-                        child: Container(
-                          padding: const EdgeInsets.all(12),
+                      ],
+                    ),
+                    child: Row(
+                      children: [
+                        // โลโก้ + ราคา
+                        Container(
+                          width: 200,
+                          height: 180,
                           decoration: BoxDecoration(
-                            color: Color(0xFFD9D9D9),
+                            color: Color(0xFFEDF4D0),
                             borderRadius: const BorderRadius.only(
-                              topRight: Radius.circular(12),
-                              bottomRight: Radius.circular(12),
+                              topLeft: Radius.circular(12),
+                              bottomLeft: Radius.circular(12),
                             ),
                           ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
+                          child: Stack(
+                            alignment: Alignment.center,
                             children: [
-                              Text(
-                                lotto.number,
-                                style: TextStyle(
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.bold,
+                              // รูป
+                              Image.asset(
+                                'assets/images/lotto_icon.png',
+                                width: 150,
+                                height: 150,
+                              ),
+
+                              // ราคา (ทับบนรูป)
+                              Positioned(
+                                bottom: 0,
+                                left: 10,
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      lotto.price.toString(),
+                                      style: TextStyle(
+                                        color: Colors.pink,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18,
+                                        height: 0.5,
+                                      ),
+                                    ),
+                                    Text(
+                                      'บาท',
+                                      style: TextStyle(
+                                        color: Colors.pink,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              SizedBox(height: 25),
-                              Text(
-                                "1 พฤศจิกายน 2568\n1 November 2025",
-                                style: TextStyle(fontSize: 12),
-                              ),
-                              SizedBox(height: 30),
-                              Text(
-                                "งวดที่ 1 ชุดที่ 1",
-                                style: TextStyle(fontSize: 12),
                               ),
                             ],
                           ),
                         ),
-                      ),
-                    ],
+
+                        // ข้อมูลลอตเตอรี่
+                        Expanded(
+                          child: Container(
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              color: Color(0xFFD9D9D9),
+                              borderRadius: const BorderRadius.only(
+                                topRight: Radius.circular(12),
+                                bottomRight: Radius.circular(12),
+                              ),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  lotto.number,
+                                  style: TextStyle(
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(height: 25),
+                                Text(
+                                  "1 พฤศจิกายน 2568\n1 November 2025",
+                                  style: TextStyle(fontSize: 12),
+                                ),
+                                SizedBox(height: 30),
+                                Text(
+                                  "งวดที่ 1 ชุดที่ 1",
+                                  style: TextStyle(fontSize: 12),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },
@@ -199,6 +206,52 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
       }
     } catch (e) {
       debugPrint('Error loading lotto: $e');
+    }
+  }
+
+  // เรียก API แล้วโชว์ผลใน Dialog
+  Future<void> checkUserLotto(String lottoNumber) async {
+    try {
+      final res = await http.get(
+        Uri.parse('$API_ENDPOINT/lotto/check/${widget.user.id}'),
+      );
+
+      if (res.statusCode == 200) {
+        // แปลง JSON เป็น List<LottoCheckGetResponse>
+        final results = lottoCheckGetResponseFromJson(res.body);
+
+        // ตรวจว่าเลขนี้ถูกรางวัลหรือไม่
+        final prize =
+            results.where((r) => r.number == lottoNumber).isNotEmpty
+                ? results.where((r) => r.number == lottoNumber).first
+                : null;
+
+        // แสดง Dialog
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text(prize != null ? 'ถูกรางวัล!' : 'ไม่ถูกรางวัล'),
+              content:
+                  prize != null
+                      ? Text(
+                        'รางวัลอันดับ: ${prize.prizeRank}\nจำนวนเงิน: ${prize.prizeAmount} บาท',
+                      )
+                      : const Text('เลขนี้ไม่ได้รางวัล'),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('ปิด'),
+                ),
+              ],
+            );
+          },
+        );
+      } else {
+        debugPrint('Failed to check lotto: ${res.statusCode}');
+      }
+    } catch (e) {
+      debugPrint('Error checking lotto: $e');
     }
   }
 }
