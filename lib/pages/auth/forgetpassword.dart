@@ -323,6 +323,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
 
       if (response.statusCode == 200) {
         showAlert("สำเร็จ", data['message']);
+        Navigator.pop(context);
       } else {
         showAlert("Error", data['error'] ?? "เกิดข้อผิดพลาด");
       }

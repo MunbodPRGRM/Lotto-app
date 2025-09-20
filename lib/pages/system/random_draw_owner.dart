@@ -14,7 +14,6 @@ class RandomDrawOwnerPage extends StatefulWidget {
 class _RandomDrawOwnerPageState extends State<RandomDrawOwnerPage> {
   Map<String, String> previewResults = {};
 
-  // state
   String? selectedMode;
 
   final Map<String, String> drawModes = {
@@ -260,7 +259,7 @@ class _RandomDrawOwnerPageState extends State<RandomDrawOwnerPage> {
 
   Future<void> confirmDraw(String mode) async {
     if (previewResults.isEmpty) {
-      // ถ้าไม่มีผล preview → แจ้งเตือน
+      // ถ้าไม่มีผล preview -> แจ้งเตือน
       showDialog(
         context: context,
         builder:

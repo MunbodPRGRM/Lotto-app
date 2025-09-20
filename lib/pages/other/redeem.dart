@@ -21,7 +21,6 @@ class _RedeemPageState extends State<RedeemPage> {
   List prizes = [];
   List<LottoCheckGetResponse> lottoList = [];
   String? selectedNumber;
-  final items = ['Item1', 'Item2', 'Item3'];
   String? value;
 
   @override

@@ -23,15 +23,6 @@ class CatalogDetail extends StatefulWidget {
 }
 
 class _CatalogDetailState extends State<CatalogDetail> {
-  // เพิ่ม state สำหรับ BottomNavigationBar
-  int selectedIndex = 1; // ตั้งค่าให้ Catalog เป็นหน้าที่ถูกเลือกอยู่
-  late final List<Widget> pages;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
