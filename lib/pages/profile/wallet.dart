@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:lotto_app/config/internal_config.dart';
 import 'package:lotto_app/model/response/user_login_post_res.dart';
 import 'package:lotto_app/model/response/wallet_balance_get_res.dart';
-import 'package:lotto_app/pages/other/search_bank.dart';
+// import 'package:lotto_app/pages/other/search_bank.dart';
 
 class WalletPage extends StatefulWidget {
   final User user;
@@ -48,67 +48,71 @@ class _WalletPageState extends State<WalletPage> {
           children: [
             const SizedBox(height: 16),
             // Total Money
-            const Text(
-              'Total Money',
-              style: TextStyle(fontSize: 16, color: Colors.grey),
+            Center(
+              child: const Text(
+                'Total Money',
+                style: TextStyle(fontSize: 16, color: Colors.grey),
+              ),
             ),
 
             const SizedBox(height: 8),
 
-            Text(
-              '${_balance.toString()} บาท',
-              style: TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
+            Center(
+              child: Text(
+                '${_balance.toString()} บาท',
+                style: TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
               ),
             ),
 
             const SizedBox(height: 32),
 
             // เลือกธนาคาร
-            const Text(
-              'เลือกธนาคาร',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 10),
+            // const Text(
+            //   'เลือกธนาคาร',
+            //   style: TextStyle(
+            //     fontSize: 16,
+            //     color: Colors.black,
+            //     fontWeight: FontWeight.bold,
+            //   ),
+            // ),
+            // const SizedBox(height: 10),
 
-            InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SearchBankPage()),
-                );
-              },
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16.0,
-                  vertical: 12.0,
-                ),
+            // InkWell(
+            //   onTap: () {
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(builder: (context) => SearchBankPage()),
+            //     );
+            //   },
+            //   child: Container(
+            //     padding: const EdgeInsets.symmetric(
+            //       horizontal: 16.0,
+            //       vertical: 12.0,
+            //     ),
 
-                decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(15.0),
-                ),
-                child: Row(
-                  children: const [
-                    Icon(Icons.account_balance_outlined, color: Colors.grey),
-                    SizedBox(width: 10),
-                    Expanded(
-                      child: Text(
-                        'เลือกธนาคารของคุณ',
-                        style: TextStyle(fontSize: 16, color: Colors.grey),
-                      ),
-                    ),
-                    Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
-                  ],
-                ),
-              ),
-            ),
+            //     decoration: BoxDecoration(
+            //       color: Colors.grey[200],
+            //       borderRadius: BorderRadius.circular(15.0),
+            //     ),
+            //     child: Row(
+            //       children: const [
+            //         Icon(Icons.account_balance_outlined, color: Colors.grey),
+            //         SizedBox(width: 10),
+            //         Expanded(
+            //           child: Text(
+            //             'เลือกธนาคารของคุณ',
+            //             style: TextStyle(fontSize: 16, color: Colors.grey),
+            //           ),
+            //         ),
+            //         Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
+            //       ],
+            //     ),
+            //   ),
+            // ),
             const SizedBox(height: 32),
 
             // ปุ่มเลือกจำนวนเงิน
