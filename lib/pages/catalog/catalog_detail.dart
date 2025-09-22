@@ -155,12 +155,12 @@ class _CatalogDetailState extends State<CatalogDetail> {
                                   ),
                                   SizedBox(height: 25),
                                   Text(
-                                    "1 พฤศจิกายน 2568\n1 November 2025",
+                                    "ซื้อเบาๆ รวยหนักๆ\nซื้อหนักๆ รวยเบาๆ",
                                     style: TextStyle(fontSize: 12),
                                   ),
                                   SizedBox(height: 30),
                                   Text(
-                                    "งวดที่ 1 ชุดที่ 1",
+                                    "โชคดีมีชัย",
                                     style: TextStyle(fontSize: 12),
                                   ),
                                 ],
@@ -175,7 +175,8 @@ class _CatalogDetailState extends State<CatalogDetail> {
               ),
             ),
 
-            const SizedBox(height: 500),
+            // const SizedBox(height: 400),
+            const Spacer(),
 
             // ปุ่ม "Buy a ticket"
             SizedBox(

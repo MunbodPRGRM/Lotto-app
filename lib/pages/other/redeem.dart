@@ -62,15 +62,28 @@ class _RedeemPageState extends State<RedeemPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(''),
+        title: const Text(
+          'Redeem',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
+        ),
         automaticallyImplyLeading: false,
+        centerTitle: true,
         elevation: 0,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child:
             prizes.isEmpty
-                ? const Center(child: CircularProgressIndicator())
+                ? Center(
+                  child: const Text(
+                    'เจ้าของระบบยังไม่ออกรางวัล',
+                    style: TextStyle(),
+                  ),
+                )
                 : Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

@@ -115,6 +115,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget buildTextField(TextEditingController textEditingController) {
     return TextField(
       controller: textEditingController,
+      readOnly: true,
       decoration: InputDecoration(
         labelStyle: const TextStyle(color: Colors.grey),
         enabledBorder: OutlineInputBorder(

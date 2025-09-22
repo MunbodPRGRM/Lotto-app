@@ -38,14 +38,21 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
     if (widget.user.role == "owner") {
       return Scaffold(
         appBar: AppBar(
-          title: const Text("My Tickets"),
+          title: const Text(
+            "My Tickets",
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+          ),
           centerTitle: true,
           automaticallyImplyLeading: false,
           foregroundColor: Colors.black,
         ),
         body: const Center(
           child: Text(
-            "แอดมินไม่ควรซื้อได้ และหน้านี้ไม่ควรมี",
+            "ผู้ดูแลระบบไม่ควรซื้อได้",
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
         ),
@@ -187,12 +194,12 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
                                 ),
                                 SizedBox(height: 25),
                                 Text(
-                                  "1 พฤศจิกายน 2568\n1 November 2025",
+                                  "ซื้อเบาๆ รวยหนักๆ\nซื้อหนักๆ รวยเบาๆ",
                                   style: TextStyle(fontSize: 12),
                                 ),
                                 SizedBox(height: 30),
                                 Text(
-                                  "งวดที่ 1 ชุดที่ 1",
+                                  "โชคดีมีชัย",
                                   style: TextStyle(fontSize: 12),
                                 ),
                               ],
