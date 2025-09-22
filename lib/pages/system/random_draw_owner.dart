@@ -216,8 +216,8 @@ class _RandomDrawOwnerPageState extends State<RandomDrawOwnerPage> {
               children: List.generate(
                 numberOfBoxes,
                 (index) => Container(
-                  width: 35,
-                  height: 35,
+                  width: 32,
+                  height: 32,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     color: Colors.grey[300],
@@ -253,6 +253,27 @@ class _RandomDrawOwnerPageState extends State<RandomDrawOwnerPage> {
         previewResults = Map<String, String>.from(data["preview"]);
       });
     } else {
+      final data = jsonDecode(response.body);
+      String errorMessage = data["error"] ?? "Unexpected error";
+
+      // ✅ ถ้ามี error จาก backend -> showDialog
+      if (mounted) {
+        showDialog(
+          context: context,
+          builder:
+              (context) => AlertDialog(
+                title: const Text("ไม่สามารถสุ่มได้"),
+                content: Text(errorMessage),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text("ตกลง"),
+                  ),
+                ],
+              ),
+        );
+      }
+
       debugPrint("Error: ${response.body}");
     }
   }

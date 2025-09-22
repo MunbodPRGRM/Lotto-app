@@ -243,16 +243,13 @@ class _CreateDrawOwnerPageState extends State<CreateDrawOwnerPage> {
                         SizedBox(height: 25),
 
                         Text(
-                          "วันนี้ เดือนนี้ ปีนี้\nซื้อแล้วรวย ซื้อแล้วรวย",
+                          "ซื้อเบาๆ รวยหนักๆ\nซื้อหนักๆ รวยเบาๆ",
                           style: TextStyle(fontSize: 12),
                         ),
 
                         SizedBox(height: 30),
 
-                        Text(
-                          "จะงวดนี้ หรืองวดหน้าก็รวย",
-                          style: TextStyle(fontSize: 12),
-                        ),
+                        Text("โชคดีมีชัย", style: TextStyle(fontSize: 12)),
                       ],
                     ),
                   ),
