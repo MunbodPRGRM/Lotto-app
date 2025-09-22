@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:lotto_app/config/internal_config.dart';
 import 'package:lotto_app/model/response/lotto_check_get_res.dart';
+import 'package:lotto_app/model/response/lotto_redeem_post.res.dart';
 import 'package:lotto_app/model/response/user_login_post_res.dart';
 import 'package:lotto_app/model/response/user_lotto_get_res.dart';
 
@@ -209,7 +212,7 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
     }
   }
 
-  // เรียก API แล้วโชว์ผลใน Dialog
+  // ===== ส่วน checkUserLotto ปรับใหม่ =====
   Future<void> checkUserLotto(String lottoNumber) async {
     try {
       final res = await http.get(
@@ -239,10 +242,24 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
                       )
                       : const Text('เลขนี้ไม่ได้รางวัล'),
               actions: [
+                // ปุ่มปิด
                 TextButton(
                   onPressed: () => Navigator.pop(context),
                   child: const Text('ปิด'),
                 ),
+
+                // ปุ่มขึ้นเงิน (ถ้าได้รางวัล)
+                if (prize != null)
+                  TextButton(
+                    onPressed: () async {
+                      Navigator.pop(context); // ปิด dialog เดิม
+                      await redeemLotto(lottoNumber); // เรียกฟังก์ชันขึ้นเงิน
+                    },
+                    child: const Text(
+                      'แลกรางวัล',
+                      style: TextStyle(color: Colors.green),
+                    ),
+                  ),
               ],
             );
           },
@@ -252,6 +269,72 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
       }
     } catch (e) {
       debugPrint('Error checking lotto: $e');
+    }
+  }
+
+  // ===== ฟังก์ชันขึ้นเงินใหม่ =====
+  Future<void> redeemLotto(String lottoNumber) async {
+    try {
+      final res = await http.post(
+        Uri.parse('$API_ENDPOINT/lotto/redeem/${widget.user.id}'),
+        headers: {"Content-Type": "application/json"},
+        body: json.encode({"lotto_number": lottoNumber}),
+      );
+
+      if (res.statusCode == 200) {
+        final result = LottoRedeemPostResponse.fromJson(json.decode(res.body));
+
+        // แสดงผลลัพธ์หลังขึ้นเงินเสร็จ
+        showDialog(
+          context: context,
+          builder:
+              (_) => AlertDialog(
+                title: const Text("ผลการแลกรางวัล"),
+                content: Text("คุณได้รับเงินรางวัล ${result.amount} บาท"),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      getAllUserLotto(); // รีโหลดลอตเตอรี่ใหม่
+                    },
+                    child: const Text("ปิด"),
+                  ),
+                ],
+              ),
+        );
+      } else {
+        showDialog(
+          context: context,
+          builder:
+              (_) => AlertDialog(
+                title: const Text("ข้อผิดพลาด"),
+                content: Text(
+                  "ไม่สามารถแลกรางวัลได้: ${res.statusCode}\n${res.body}",
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text("ปิด"),
+                  ),
+                ],
+              ),
+        );
+      }
+    } catch (e) {
+      showDialog(
+        context: context,
+        builder:
+            (_) => AlertDialog(
+              title: const Text("ข้อผิดพลาด"),
+              content: Text("เกิดข้อผิดพลาด: $e"),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text("ปิด"),
+                ),
+              ],
+            ),
+      );
     }
   }
 }

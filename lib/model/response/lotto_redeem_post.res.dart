@@ -12,12 +12,27 @@ String lottoRedeemPostResponseToJson(LottoRedeemPostResponse data) =>
 
 class LottoRedeemPostResponse {
   String message;
-  int amount;
+  int? amount; // ให้เป็น nullable
 
-  LottoRedeemPostResponse({required this.message, required this.amount});
+  LottoRedeemPostResponse({required this.message, this.amount});
 
   factory LottoRedeemPostResponse.fromJson(Map<String, dynamic> json) =>
-      LottoRedeemPostResponse(message: json["message"], amount: json["amount"]);
+      LottoRedeemPostResponse(
+        message: json["message"],
+        amount: json["amount"] != null ? json["amount"] as int : null,
+      );
 
   Map<String, dynamic> toJson() => {"message": message, "amount": amount};
+}
+
+class Prize {
+  int rank;
+  int amount;
+
+  Prize({required this.rank, required this.amount});
+
+  factory Prize.fromJson(Map<String, dynamic> json) =>
+      Prize(rank: json["rank"], amount: json["amount"]);
+
+  Map<String, dynamic> toJson() => {"rank": rank, "amount": amount};
 }

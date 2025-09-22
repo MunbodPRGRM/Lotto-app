@@ -74,23 +74,16 @@ class _RedeemPageState extends State<RedeemPage> {
                 : Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // แถบค้นหา
-                    TextField(
-                      decoration: InputDecoration(
-                        hintText: 'โปรดป้อนหมายเลขของคุณ',
-                        prefixIcon: const Icon(Icons.search),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                          borderSide: BorderSide.none,
-                        ),
-                        filled: true,
-                        fillColor: Colors.grey[200],
-                        contentPadding: const EdgeInsets.symmetric(
-                          vertical: 10.0,
-                          horizontal: 20.0,
+                    Center(
+                      child: Text(
+                        'เลข Lotto ที่ออก',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
+
                     const SizedBox(height: 24),
                     // ตารางผลรางวัล
                     Table(
@@ -258,8 +251,12 @@ class _RedeemPageState extends State<RedeemPage> {
           context: context,
           builder:
               (_) => AlertDialog(
-                title: const Text("แลกรางวัลสำเร็จ"),
-                content: Text("คุณได้รับเงินรางวัล ${result.amount} บาท"),
+                title: const Text("ผลการแลกรางวัล"),
+                content: Text(
+                  result.amount != null
+                      ? "คุณได้รับเงินรางวัล ${result.amount} บาท"
+                      : result.message, // ถ้าไม่ถูกรางวัล แสดง message จาก API
+                ),
                 actions: [
                   TextButton(
                     onPressed: () => Navigator.pop(context),
