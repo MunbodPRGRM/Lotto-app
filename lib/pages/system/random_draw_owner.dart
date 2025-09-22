@@ -285,15 +285,13 @@ class _RandomDrawOwnerPageState extends State<RandomDrawOwnerPage> {
     );
 
     if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
+      // final data = jsonDecode(response.body);
       showDialog(
         context: context,
         builder:
             (_) => AlertDialog(
               title: const Text("บันทึกสำเร็จ"),
-              content: Text(
-                "ยืนยันผลรางวัลเรียบร้อย (Draw ID: ${data['draw_id']})",
-              ),
+              content: Text("ยืนยันสร้างผลรางวัลเรียบร้อย"),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
