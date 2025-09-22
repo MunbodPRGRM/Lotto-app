@@ -16,8 +16,8 @@ class CreateDrawOwnerPage extends StatefulWidget {
 
 class _CreateDrawOwnerPageState extends State<CreateDrawOwnerPage> {
   TextEditingController countCtl = TextEditingController();
-  TextEditingController _dateController = TextEditingController();
-  DateTime? _selectedDate;
+  // TextEditingController _dateController = TextEditingController();
+  // DateTime? _selectedDate;
 
   @override
   Widget build(BuildContext context) {
@@ -61,29 +61,28 @@ class _CreateDrawOwnerPageState extends State<CreateDrawOwnerPage> {
 
             const SizedBox(height: 25),
 
-            Row(
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: TextField(
-                    controller: _dateController,
-                    readOnly: true,
-                    onTap: () => _selectDate(),
-                    decoration: InputDecoration(
-                      hintText: 'งวดที่',
-                      suffixIcon: const Icon(Icons.calendar_today),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: BorderSide.none,
-                      ),
-                      filled: true,
-                      fillColor: Colors.grey[200],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-
+            // Row(
+            //   children: [
+            //     Expanded(
+            //       flex: 2,
+            //       child: TextField(
+            //         controller: _dateController,
+            //         readOnly: true,
+            //         onTap: () => _selectDate(),
+            //         decoration: InputDecoration(
+            //           hintText: 'งวดที่',
+            //           suffixIcon: const Icon(Icons.calendar_today),
+            //           border: OutlineInputBorder(
+            //             borderRadius: BorderRadius.circular(10.0),
+            //             borderSide: BorderSide.none,
+            //           ),
+            //           filled: true,
+            //           fillColor: Colors.grey[200],
+            //         ),
+            //       ),
+            //     ),
+            //   ],
+            // ),
             const SizedBox(height: 16),
 
             Row(
@@ -106,47 +105,47 @@ class _CreateDrawOwnerPageState extends State<CreateDrawOwnerPage> {
 
                 const SizedBox(width: 8),
 
-                Expanded(
-                  flex: 3,
-                  child: SizedBox(
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        final count = countCtl.text; // ค่าที่กรอกใน TextField
+                // Expanded(
+                //   flex: 3,
+                //   child: SizedBox(
+                //     height: 50,
+                //     child: ElevatedButton(
+                //       onPressed: () {
+                //         final count = countCtl.text; // ค่าที่กรอกใน TextField
 
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: const Text("ยืนยันการสร้าง Lotto"),
-                              content: Text(
-                                "คุณต้องการสร้าง Lotto จำนวน $count ใบใช่หรือไม่?",
-                              ),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop(); // ปิด popup
-                                  },
-                                  child: const Text("ตกลง"),
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFF44336), // สีแดงอมชมพู
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                      child: const Text(
-                        'Create',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ),
+                //         showDialog(
+                //           context: context,
+                //           builder: (BuildContext context) {
+                //             return AlertDialog(
+                //               title: const Text("ยืนยันการสร้าง Lotto"),
+                //               content: Text(
+                //                 "คุณต้องการสร้าง Lotto จำนวน $count ใบใช่หรือไม่?",
+                //               ),
+                //               actions: [
+                //                 TextButton(
+                //                   onPressed: () {
+                //                     Navigator.of(context).pop(); // ปิด popup
+                //                   },
+                //                   child: const Text("ตกลง"),
+                //                 ),
+                //               ],
+                //             );
+                //           },
+                //         );
+                //       },
+                //       style: ElevatedButton.styleFrom(
+                //         backgroundColor: const Color(0xFFF44336), // สีแดงอมชมพู
+                //         shape: RoundedRectangleBorder(
+                //           borderRadius: BorderRadius.circular(10.0),
+                //         ),
+                //       ),
+                //       child: const Text(
+                //         'Create',
+                //         style: TextStyle(color: Colors.white),
+                //       ),
+                //     ),
+                //   ),
+                // ),
               ],
             ),
 
@@ -240,14 +239,18 @@ class _CreateDrawOwnerPageState extends State<CreateDrawOwnerPage> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
+
                         SizedBox(height: 25),
+
                         Text(
-                          "1 พฤศจิกายน 2568\n1 November 2025",
+                          "วันนี้ เดือนนี้ ปีนี้\nซื้อแล้วรวย ซื้อแล้วรวย",
                           style: TextStyle(fontSize: 12),
                         ),
+
                         SizedBox(height: 30),
+
                         Text(
-                          "งวดที่ 1 ชุดที่ 1",
+                          "จะงวดนี้ หรืองวดหน้าก็รวย",
                           style: TextStyle(fontSize: 12),
                         ),
                       ],
@@ -288,20 +291,20 @@ class _CreateDrawOwnerPageState extends State<CreateDrawOwnerPage> {
     );
   }
 
-  Future<void> _selectDate() async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: _selectedDate ?? DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
-    );
-    if (picked != null && picked != _selectedDate) {
-      setState(() {
-        _selectedDate = picked;
-        _dateController.text = "${picked.day}/${picked.month}/${picked.year}";
-      });
-    }
-  }
+  // Future<void> _selectDate() async {
+  //   final DateTime? picked = await showDatePicker(
+  //     context: context,
+  //     initialDate: _selectedDate ?? DateTime.now(),
+  //     firstDate: DateTime(2000),
+  //     lastDate: DateTime(2100),
+  //   );
+  //   if (picked != null && picked != _selectedDate) {
+  //     setState(() {
+  //       _selectedDate = picked;
+  //       _dateController.text = "${picked.day}/${picked.month}/${picked.year}";
+  //     });
+  //   }
+  // }
 
   Future<void> createLotto() async {
     final url = Uri.parse('$API_ENDPOINT/lotto/create');
