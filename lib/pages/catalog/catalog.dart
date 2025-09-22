@@ -94,17 +94,27 @@ class _CatalogPageState extends State<CatalogPage> {
           final lotto = filteredLotto[index];
           return InkWell(
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder:
-                      (context) => CatalogDetail(
-                        user: widget.user,
-                        wallet: widget.wallet,
-                        lotto: lotto,
-                      ),
-                ),
-              );
+              if (widget.user.role != "owner") {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder:
+                        (context) => CatalogDetail(
+                          user: widget.user,
+                          wallet: widget.wallet,
+                          lotto: lotto,
+                        ),
+                  ),
+                );
+              } else {
+                // ถ้าเป็น owner กดไม่ได้ → จะไม่ทำอะไร หรือจะแสดงแจ้งเตือนก็ได้
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("เจ้าของระบบไม่สามารถซื้อได้"),
+                    duration: Duration(seconds: 2),
+                  ),
+                );
+              }
             },
             child: Container(
               height: 180,
@@ -200,12 +210,12 @@ class _CatalogPageState extends State<CatalogPage> {
                           ),
                           SizedBox(height: 25),
                           Text(
-                            "1 พฤศจิกายน 2568\n1 November 2025",
+                            "วันนี้ เดือนนี้ ปีนี้\nซื้อแล้วรวย ซื้อแล้วรวย",
                             style: TextStyle(fontSize: 12),
                           ),
                           SizedBox(height: 30),
                           Text(
-                            "งวดที่ 1 ชุดที่ 1",
+                            "จะงวดนี้ หรืองวดหน้าก็รวย",
                             style: TextStyle(fontSize: 12),
                           ),
                         ],
