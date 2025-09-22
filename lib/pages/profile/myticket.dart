@@ -34,6 +34,23 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
 
   @override
   Widget build(BuildContext context) {
+    // ถ้าเป็น owner → ไม่เห็น lotto
+    if (widget.user.role == "owner") {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text("My Tickets"),
+          centerTitle: true,
+          automaticallyImplyLeading: false,
+          foregroundColor: Colors.black,
+        ),
+        body: const Center(
+          child: Text(
+            "แอดมินไม่ควรซื้อได้ และหน้านี้ไม่ควรมี",
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+        ),
+      );
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text("My Tickets"),
