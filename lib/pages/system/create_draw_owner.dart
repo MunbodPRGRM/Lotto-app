@@ -1,9 +1,11 @@
 import 'dart:convert';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:lotto_app/config/internal_config.dart';
 import 'package:lotto_app/model/response/user_login_post_res.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart'; // Add this import
 
 class CreateDrawOwnerPage extends StatefulWidget {
   final User user;
@@ -23,7 +25,7 @@ class _CreateDrawOwnerPageState extends State<CreateDrawOwnerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(100),
+        preferredSize: Size.fromHeight(100.h), // Use h for height
         child: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.white),
@@ -31,23 +33,24 @@ class _CreateDrawOwnerPageState extends State<CreateDrawOwnerPage> {
               Navigator.pop(context);
             },
           ),
-          title: const Text(
+          title: Text(
             'Create Tickets',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20.sp,
+            ), // Use sp for font size
           ),
           centerTitle: true,
-          backgroundColor: const Color(0xFFF44336), // สีแดงอมชมพู
+          backgroundColor: const Color(0xFFF44336),
           elevation: 0,
         ),
       ),
-
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(16.w), // Use w for padding
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 25),
-            // ส่วนตั้งค่าการสร้าง
+            SizedBox(height: 25.h), // Use h for height
             const Center(
               child: Text(
                 'Create Settings',
@@ -58,9 +61,7 @@ class _CreateDrawOwnerPageState extends State<CreateDrawOwnerPage> {
                 ),
               ),
             ),
-
-            const SizedBox(height: 25),
-
+            SizedBox(height: 25.h), // Use h for height
             // Row(
             //   children: [
             //     Expanded(
@@ -83,8 +84,7 @@ class _CreateDrawOwnerPageState extends State<CreateDrawOwnerPage> {
             //     ),
             //   ],
             // ),
-            const SizedBox(height: 16),
-
+            SizedBox(height: 16.h), // Use h for height
             Row(
               children: [
                 Expanded(
@@ -94,7 +94,9 @@ class _CreateDrawOwnerPageState extends State<CreateDrawOwnerPage> {
                     decoration: InputDecoration(
                       hintText: 'จำนวนล็อตโต้',
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
+                        borderRadius: BorderRadius.circular(
+                          10.r,
+                        ), // Use r for radius
                         borderSide: BorderSide.none,
                       ),
                       filled: true,
@@ -102,17 +104,14 @@ class _CreateDrawOwnerPageState extends State<CreateDrawOwnerPage> {
                     ),
                   ),
                 ),
-
-                const SizedBox(width: 8),
-
+                SizedBox(width: 8.w), // Use w for width
                 // Expanded(
                 //   flex: 3,
                 //   child: SizedBox(
                 //     height: 50,
                 //     child: ElevatedButton(
                 //       onPressed: () {
-                //         final count = countCtl.text; // ค่าที่กรอกใน TextField
-
+                //         final count = countCtl.text;
                 //         showDialog(
                 //           context: context,
                 //           builder: (BuildContext context) {
@@ -124,7 +123,7 @@ class _CreateDrawOwnerPageState extends State<CreateDrawOwnerPage> {
                 //               actions: [
                 //                 TextButton(
                 //                   onPressed: () {
-                //                     Navigator.of(context).pop(); // ปิด popup
+                //                     Navigator.of(context).pop();
                 //                   },
                 //                   child: const Text("ตกลง"),
                 //                 ),
@@ -134,7 +133,7 @@ class _CreateDrawOwnerPageState extends State<CreateDrawOwnerPage> {
                 //         );
                 //       },
                 //       style: ElevatedButton.styleFrom(
-                //         backgroundColor: const Color(0xFFF44336), // สีแดงอมชมพู
+                //         backgroundColor: const Color(0xFFF44336),
                 //         shape: RoundedRectangleBorder(
                 //           borderRadius: BorderRadius.circular(10.0),
                 //         ),
@@ -148,10 +147,7 @@ class _CreateDrawOwnerPageState extends State<CreateDrawOwnerPage> {
                 // ),
               ],
             ),
-
-            const SizedBox(height: 40),
-
-            // ส่วนตัวอย่างล็อตโต้
+            SizedBox(height: 40.h), // Use h for height
             const Center(
               child: Text(
                 'ตัวอย่างล็อตโต้',
@@ -162,35 +158,30 @@ class _CreateDrawOwnerPageState extends State<CreateDrawOwnerPage> {
                 ),
               ),
             ),
-
-            const SizedBox(height: 40),
-
+            SizedBox(height: 40.h), // Use h for height
             Row(
               children: [
                 Container(
-                  width: 200,
-                  height: 180,
+                  width: 200.w, // Use w for width
+                  height: 180.h, // Use h for height
                   decoration: BoxDecoration(
-                    color: Color(0xFFEDF4D0),
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(12),
-                      bottomLeft: Radius.circular(12),
+                    color: const Color(0xFFEDF4D0),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(12.r), // Use r for radius
+                      bottomLeft: Radius.circular(12.r), // Use r for radius
                     ),
                   ),
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
-                      // รูป
                       Image.asset(
                         'assets/images/lotto_icon.png',
-                        width: 150,
-                        height: 150,
+                        width: 150.w, // Use w for width
+                        height: 150.h, // Use h for height
                       ),
-
-                      // ราคา (ทับบนรูป)
                       Positioned(
                         bottom: 0,
-                        left: 10,
+                        left: 10.w, // Use w for left position
                         child: Column(
                           children: [
                             Text(
@@ -198,7 +189,7 @@ class _CreateDrawOwnerPageState extends State<CreateDrawOwnerPage> {
                               style: TextStyle(
                                 color: Colors.pink,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 18,
+                                fontSize: 18.sp, // Use sp for font size
                                 height: 0.5,
                               ),
                             ),
@@ -207,7 +198,7 @@ class _CreateDrawOwnerPageState extends State<CreateDrawOwnerPage> {
                               style: TextStyle(
                                 color: Colors.pink,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 14,
+                                fontSize: 14.sp, // Use sp for font size
                               ),
                             ),
                           ],
@@ -216,66 +207,82 @@ class _CreateDrawOwnerPageState extends State<CreateDrawOwnerPage> {
                     ],
                   ),
                 ),
-
-                // ข้อมูลลอตเตอรี่
                 Expanded(
                   child: Container(
-                    padding: const EdgeInsets.all(12),
+                    width: 200.w,
+                    height: 180.h,
+                    padding: EdgeInsets.all(12.w), // Use w for padding
                     decoration: BoxDecoration(
-                      color: Color(0xFFD9D9D9),
-                      borderRadius: const BorderRadius.only(
-                        topRight: Radius.circular(12),
-                        bottomRight: Radius.circular(12),
+                      color: const Color(0xFFD9D9D9),
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(12.r), // Use r for radius
+                        bottomRight: Radius.circular(12.r), // Use r for radius
                       ),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          "123456",
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
+                        Flexible(
+                          child: AutoSizeText(
+                            "123456",
+                            style: TextStyle(
+                              fontSize: 30.sp, // 12. ปรับ font size
+                              fontWeight: FontWeight.bold,
+                            ),
+                            minFontSize: 15,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
-
-                        SizedBox(height: 25),
-
-                        Text(
-                          "ซื้อเบาๆ รวยหนักๆ\nซื้อหนักๆ รวยเบาๆ",
-                          style: TextStyle(fontSize: 12),
+                        SizedBox(height: 12.h), // Use h for height
+                        Flexible(
+                          child: AutoSizeText(
+                            "ซื้อเบาๆ รวยหนักๆ\nซื้อหนักๆ รวยเบาๆ",
+                            style: TextStyle(
+                              fontSize: 12.sp,
+                            ), // Use sp for font size
+                            minFontSize: 6,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
-
-                        SizedBox(height: 30),
-
-                        Text("โชคดีมีชัย", style: TextStyle(fontSize: 12)),
+                        SizedBox(height: 15.h), // Use h for height
+                        Flexible(
+                          child: AutoSizeText(
+                            "โชคดีมีชัย",
+                            style: TextStyle(fontSize: 12.sp),
+                            minFontSize: 6,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ), // Use sp for font size
                       ],
                     ),
                   ),
                 ),
               ],
             ),
-
-            const SizedBox(height: 70),
-
+            SizedBox(height: 70.h), // Use h for height
             SizedBox(
               width: double.infinity,
-              height: 50,
+              height: 50.h, // Use h for height
               child: ElevatedButton(
                 onPressed: () {
                   createLotto();
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFF44336), // สีแดงอมชมพู
+                  backgroundColor: const Color(0xFFF44336),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25.0),
+                    borderRadius: BorderRadius.circular(
+                      25.r,
+                    ), // Use r for radius
                   ),
                 ),
-                child: const Text(
+                child: Text(
                   'Submit',
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 18.sp, // Use sp for font size
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
@@ -328,7 +335,10 @@ class _CreateDrawOwnerPageState extends State<CreateDrawOwnerPage> {
                 ),
                 actions: [
                   TextButton(
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                    },
                     child: const Text("OK"),
                   ),
                 ],

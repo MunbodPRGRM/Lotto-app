@@ -1,10 +1,12 @@
 import 'dart:convert';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:lotto_app/config/internal_config.dart';
 import 'package:lotto_app/model/response/lotto_catalog_post_res.dart';
 import 'package:lotto_app/model/response/user_login_post_res.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart'; // เพิ่ม import นี้เข้ามา
 
 class CatalogDetail extends StatefulWidget {
   final User user;
@@ -34,44 +36,49 @@ class _CatalogDetailState extends State<CatalogDetail> {
             Navigator.pop(context);
           },
         ),
-        title: const Text('Lotto details'),
+        title: Text(
+          'Lotto details',
+          style: TextStyle(fontSize: 18.sp),
+        ), // ปรับขนาด font
         elevation: 0,
       ),
 
       // 2. ส่วนเนื้อหาหลัก
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(16.w), // ปรับขนาด padding
         child: Column(
           children: [
             // Container สำหรับบัตรลอตเตอรี่
             Container(
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(15.0),
+                borderRadius: BorderRadius.circular(15.r), // ปรับขนาด radius
                 boxShadow: [
                   BoxShadow(
                     color: Colors.grey.withOpacity(0.2),
-                    spreadRadius: 2,
-                    blurRadius: 5,
-                    offset: const Offset(0, 3),
+                    spreadRadius: 2.r, // ปรับขนาด radius
+                    blurRadius: 5.r, // ปรับขนาด radius
+                    offset: Offset(0, 3.h), // ปรับขนาด offset
                   ),
                 ],
               ),
               child: Row(
                 children: [
-                  // ส่วนบัตรสีเขียวด้านซ้าย
+                  // ส่วนบัตรด้านซ้าย
                   Expanded(
                     child: Container(
-                      height: 180,
-                      margin: const EdgeInsets.only(bottom: 12),
+                      height: 180.h, // ปรับความสูง
+                      margin: EdgeInsets.only(bottom: 12.h), // ปรับ margin
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(
+                          12.r,
+                        ), // ปรับขนาด radius
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.withOpacity(0.2),
-                            blurRadius: 5,
-                            offset: const Offset(0, 3),
+                            blurRadius: 5.r, // ปรับขนาด radius
+                            offset: Offset(0, 3.h), // ปรับขนาด offset
                           ),
                         ],
                       ),
@@ -79,16 +86,16 @@ class _CatalogDetailState extends State<CatalogDetail> {
                         children: [
                           // โลโก้ + ราคา
                           Container(
-                            width: 200,
-                            height: 180,
+                            width: 200.w, // ปรับความกว้าง
+                            height: 180.h, // ปรับความสูง
                             decoration: BoxDecoration(
                               color:
                                   widget.lotto.status == "sold"
-                                      ? Color(0xFFD9D9D9)
-                                      : Color(0xFFEDF4D0),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(12),
-                                bottomLeft: Radius.circular(12),
+                                      ? const Color(0xFFD9D9D9)
+                                      : const Color(0xFFEDF4D0),
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(12.r),
+                                bottomLeft: Radius.circular(12.r),
                               ),
                             ),
                             child: Stack(
@@ -97,14 +104,14 @@ class _CatalogDetailState extends State<CatalogDetail> {
                                 // รูป
                                 Image.asset(
                                   'assets/images/lotto_icon.png',
-                                  width: 150,
-                                  height: 150,
+                                  width: 150.w, // ปรับความกว้าง
+                                  height: 150.h, // ปรับความสูง
                                 ),
 
                                 // ราคา (ทับบนรูป)
                                 Positioned(
                                   bottom: 0,
-                                  left: 10,
+                                  left: 10.w, // ปรับระยะห่าง
                                   child: Column(
                                     children: [
                                       Text(
@@ -112,7 +119,7 @@ class _CatalogDetailState extends State<CatalogDetail> {
                                         style: TextStyle(
                                           color: Colors.pink,
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 18,
+                                          fontSize: 18.sp, // ปรับ font size
                                           height: 0.5,
                                         ),
                                       ),
@@ -121,7 +128,7 @@ class _CatalogDetailState extends State<CatalogDetail> {
                                         style: TextStyle(
                                           color: Colors.pink,
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 14,
+                                          fontSize: 14.sp, // ปรับ font size
                                         ),
                                       ),
                                     ],
@@ -134,34 +141,55 @@ class _CatalogDetailState extends State<CatalogDetail> {
                           // ข้อมูลลอตเตอรี่
                           Expanded(
                             child: Container(
-                              padding: const EdgeInsets.all(12),
+                              padding: EdgeInsets.all(12.w), // ปรับ padding
                               decoration: BoxDecoration(
-                                color: Color(0xFFD9D9D9),
-                                borderRadius: const BorderRadius.only(
-                                  topRight: Radius.circular(12),
-                                  bottomRight: Radius.circular(12),
+                                color: const Color(0xFFD9D9D9),
+                                borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(12.r),
+                                  bottomRight: Radius.circular(12.r),
                                 ),
                               ),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text(
-                                    "${widget.lotto.number}",
-                                    style: TextStyle(
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.bold,
+                                  Flexible(
+                                    child: AutoSizeText(
+                                      "${widget.lotto.number}",
+                                      style: TextStyle(
+                                        fontSize: 30.sp, // 12. ปรับ font size
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      minFontSize: 15,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
-                                  SizedBox(height: 25),
-                                  Text(
-                                    "ซื้อเบาๆ รวยหนักๆ\nซื้อหนักๆ รวยเบาๆ",
-                                    style: TextStyle(fontSize: 12),
+                                  SizedBox(height: 12.h), // ปรับ height
+                                  Flexible(
+                                    child: AutoSizeText(
+                                      "ซื้อเบาๆ รวยหนักๆ\nซื้อหนักๆ รวยเบาๆ",
+                                      style: TextStyle(
+                                        fontSize: 12.sp,
+                                      ), // 13. ปรับ font size
+                                      minFontSize: 6,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
                                   ),
-                                  SizedBox(height: 30),
-                                  Text(
-                                    "โชคดีมีชัย",
-                                    style: TextStyle(fontSize: 12),
+                                  SizedBox(height: 15.h), // ปรับ height
+                                  Flexible(
+                                    child: AutoSizeText(
+                                      "โชคดีมีชัย",
+                                      style: TextStyle(fontSize: 12.sp),
+                                      minFontSize:
+                                          6, // ขนาดฟอนต์เล็กสุดที่อนุญาตให้ย่อได้
+                                      maxLines:
+                                          1, // จำนวนบรรทัดสูงสุดที่ต้องการ
+                                      overflow:
+                                          TextOverflow
+                                              .ellipsis, // เพิ่มเติมในกรณีที่ข้อความยังล้น
+                                    ),
                                   ),
                                 ],
                               ),
@@ -175,27 +203,28 @@ class _CatalogDetailState extends State<CatalogDetail> {
               ),
             ),
 
-            // const SizedBox(height: 400),
             const Spacer(),
 
             // ปุ่ม "Buy a ticket"
             SizedBox(
               width: double.infinity,
-              height: 50,
+              height: 50.h, // ปรับความสูง
               child: ElevatedButton(
                 onPressed: buyTicket,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFFEECEF), // สีชมพู
+                  backgroundColor: const Color(0xFFFEECEF),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25.0),
+                    borderRadius: BorderRadius.circular(
+                      25.r,
+                    ), // ปรับขนาด radius
                   ),
                 ),
-                child: const Text(
+                child: Text(
                   'Buy a ticket',
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 18.sp, // ปรับ font size
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFFF06292),
+                    color: const Color(0xFFF06292),
                   ),
                 ),
               ),

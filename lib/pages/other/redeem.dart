@@ -1,11 +1,13 @@
 import 'dart:convert';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:lotto_app/config/internal_config.dart';
 import 'package:lotto_app/model/response/lotto_check_get_res.dart';
 import 'package:lotto_app/model/response/lotto_redeem_post.res.dart';
 import 'package:lotto_app/model/response/user_login_post_res.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart'; // Add this import
 
 class RedeemPage extends StatefulWidget {
   final User user;
@@ -62,10 +64,10 @@ class _RedeemPageState extends State<RedeemPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'Redeem',
           style: TextStyle(
-            fontSize: 20,
+            fontSize: 20.sp, // Use sp for font size
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
@@ -75,13 +77,13 @@ class _RedeemPageState extends State<RedeemPage> {
         elevation: 0,
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(16.w), // Use w for padding
         child:
             prizes.isEmpty
                 ? Center(
-                  child: const Text(
+                  child: Text(
                     'เจ้าของระบบยังไม่ออกรางวัล',
-                    style: TextStyle(),
+                    style: TextStyle(fontSize: 16.sp), // Use sp for font size
                   ),
                 )
                 : Column(
@@ -91,13 +93,13 @@ class _RedeemPageState extends State<RedeemPage> {
                       child: Text(
                         'เลข Lotto ที่ออก',
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 20.sp, // Use sp for font size
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
 
-                    const SizedBox(height: 24),
+                    SizedBox(height: 24.h), // Use h for vertical spacing
                     // ตารางผลรางวัล
                     Table(
                       columnWidths: const {
@@ -137,16 +139,18 @@ class _RedeemPageState extends State<RedeemPage> {
                       ],
                     ),
 
-                    const SizedBox(height: 32),
+                    SizedBox(height: 32.h), // Use h for vertical spacing
 
                     Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20.0,
-                        vertical: 0, // ลดความสูงแนวตั้งลง
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 20.w, // Use w for horizontal padding
+                        vertical: 0,
                       ),
                       decoration: BoxDecoration(
                         color: Colors.grey[200],
-                        borderRadius: BorderRadius.circular(30.0),
+                        borderRadius: BorderRadius.circular(
+                          30.r,
+                        ), // Use r for radius
                         border: Border.all(color: Colors.transparent),
                       ),
                       child: DropdownButtonHideUnderline(
@@ -157,37 +161,34 @@ class _RedeemPageState extends State<RedeemPage> {
                               Icons.confirmation_num_outlined,
                               color: Colors.pink,
                             ),
-                            const SizedBox(
-                              width: 12,
-                            ), // เพิ่มระยะห่างระหว่าง Icon กับ Dropdown
+                            SizedBox(
+                              width: 12.w, // Use w for horizontal spacing
+                            ),
                             Expanded(
                               child: DropdownButton<String>(
                                 value: selectedNumber,
-                                icon: const Icon(
-                                  Icons.arrow_drop_down,
-                                ), // ไอคอนลูกศรปกติ
+                                icon: const Icon(Icons.arrow_drop_down),
                                 isExpanded: true,
                                 hint: const Text(
                                   'โปรดเลือกหมายเลขของท่าน',
                                   style: TextStyle(color: Colors.grey),
                                 ),
                                 items:
-                                    lottoList.map<DropdownMenuItem<String>>((
-                                      LottoCheckGetResponse item,
-                                    ) {
-                                      return DropdownMenuItem<String>(
-                                        value: item.number,
-                                        child: Text(item.number),
-                                      );
-                                    }).toList(),
+                                    lottoList
+                                        .map<DropdownMenuItem<String>>(
+                                          (LottoCheckGetResponse item) =>
+                                              DropdownMenuItem<String>(
+                                                value: item.number,
+                                                child: Text(item.number),
+                                              ),
+                                        )
+                                        .toList(),
                                 onChanged: (String? newValue) {
                                   setState(() => selectedNumber = newValue);
                                 },
-                                // กำหนด padding ให้เป็น 0 เพื่อลดพื้นที่ว่าง
                                 padding: EdgeInsets.zero,
-                                // กำหนด style ให้ลดขนาด font ลง
-                                style: const TextStyle(
-                                  fontSize: 16,
+                                style: TextStyle(
+                                  fontSize: 16.sp, // Use sp for font size
                                   color: Colors.black,
                                 ),
                               ),
@@ -197,24 +198,25 @@ class _RedeemPageState extends State<RedeemPage> {
                       ),
                     ),
 
-                    const SizedBox(height: 24),
-
+                    SizedBox(height: 24.h), // Use h for vertical spacing
                     // ปุ่มยืนยัน
                     SizedBox(
                       width: double.infinity,
-                      height: 50,
+                      height: 50.h, // Use h for button height
                       child: ElevatedButton(
                         onPressed: EnterRedeem,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFFF06292), // สีชมพู
+                          backgroundColor: const Color(0xFFF06292),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25.0),
+                            borderRadius: BorderRadius.circular(
+                              25.r,
+                            ), // Use r for radius
                           ),
                         ),
-                        child: const Text(
+                        child: Text(
                           'ยืนยัน',
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 18.sp, // Use sp for font size
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                           ),
@@ -229,7 +231,6 @@ class _RedeemPageState extends State<RedeemPage> {
 
   Future<void> EnterRedeem() async {
     if (selectedNumber == null) {
-      // แจ้งผู้ใช้ถ้ายังไม่เลือกเลข
       showDialog(
         context: context,
         builder:
@@ -257,9 +258,10 @@ class _RedeemPageState extends State<RedeemPage> {
       if (res.statusCode == 200) {
         final result = LottoRedeemPostResponse.fromJson(json.decode(res.body));
 
-        selectedNumber = null;
+        setState(() {
+          selectedNumber = null;
+        });
 
-        // แสดง Dialog แจ้งผลรางวัล
         showDialog(
           context: context,
           builder:
@@ -268,7 +270,7 @@ class _RedeemPageState extends State<RedeemPage> {
                 content: Text(
                   result.amount != null
                       ? "คุณได้รับเงินรางวัล ${result.amount} บาท"
-                      : result.message, // ถ้าไม่ถูกรางวัล แสดง message จาก API
+                      : result.message,
                 ),
                 actions: [
                   TextButton(
@@ -279,7 +281,6 @@ class _RedeemPageState extends State<RedeemPage> {
               ),
         );
 
-        // รีโหลดข้อมูลล็อตเตอรี่ใหม่
         loadData();
       } else {
         showDialog(
@@ -343,7 +344,6 @@ class _RedeemPageState extends State<RedeemPage> {
     }
   }
 
-  // ฟังก์ชันช่วยสร้าง TableRow สำหรับตาราง
   TableRow _buildTableRow(String category, String number, String prize) {
     return TableRow(
       children: [
@@ -354,22 +354,25 @@ class _RedeemPageState extends State<RedeemPage> {
     );
   }
 
-  // ฟังก์ชันช่วยสร้าง Cell สำหรับตาราง
   Widget _buildTableCell(
     String text, {
     bool isHeader = false,
     TextAlign alignment = TextAlign.start,
   }) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Text(
+      padding: EdgeInsets.symmetric(
+        vertical: 8.h,
+      ), // Use h for vertical padding
+      child: AutoSizeText(
         text,
         textAlign: alignment,
         style: TextStyle(
           fontWeight: isHeader ? FontWeight.bold : FontWeight.normal,
-          fontSize: 16,
+          fontSize: 16.sp, // Use sp for font size
           color: isHeader ? Colors.black : Colors.black87,
         ),
+        minFontSize: 8,
+        maxLines: 1,
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lotto_app/pages/auth/login.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart'; // Import ScreenUtil
 
 class LoadingPage extends StatefulWidget {
   const LoadingPage({super.key});
@@ -38,26 +39,26 @@ class _LoadingPageState extends State<LoadingPage> {
             children: [
               Image.asset(
                 'assets/images/lotto_icon.png',
-                width: 276,
-                height: 276,
+                width: 276.w,
+                height: 276.h,
               ),
-              const Text(
+              SizedBox(height: 16.h),
+              Text(
                 'Lotto Application',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 36,
+                  fontSize: 36.sp,
                   fontWeight: FontWeight.bold,
                   fontFamily: 'Righteous',
                 ),
               ),
-              const SizedBox(height: 97),
-              // Image.asset('assets/images/vector.png', width: 286, height: 279),
-              const SizedBox(
-                width: 286,
-                height: 279,
+              SizedBox(height: 97.h),
+              SizedBox(
+                width: 286.w,
+                height: 279.h,
                 child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                  strokeWidth: 20.0,
+                  valueColor: const AlwaysStoppedAnimation<Color>(Colors.white),
+                  strokeWidth: 20.w,
                 ),
               ),
             ],

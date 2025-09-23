@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lotto_app/model/response/user_login_post_res.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart'; // Add this import
 
 class ProfilePage extends StatefulWidget {
   final User user;
@@ -34,7 +35,9 @@ class _ProfilePageState extends State<ProfilePage> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: EdgeInsets.all(
+            20.w,
+          ), // Use w for horizontal and vertical padding
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -42,62 +45,79 @@ class _ProfilePageState extends State<ProfilePage> {
                   alignment: Alignment.topRight,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFFFEECEF),
+                      backgroundColor: const Color(0xFFFEECEF),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: BorderRadius.circular(
+                          30.r,
+                        ), // Use r for radius
                       ),
                     ),
                     onPressed: signout,
-                    child: const Text(
+                    child: Text(
                       "Sign out",
-                      style: TextStyle(color: Colors.red),
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 14.sp, // Use sp for font size
+                      ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 10),
+                SizedBox(height: 10.h), // Use h for vertical spacing
                 Stack(
                   alignment: Alignment.bottomRight,
                   children: [
                     CircleAvatar(
-                      radius: 50,
+                      radius: 50.r, // Use r for radius
                       backgroundColor:
                           widget.user.role == "member"
                               ? Colors.blueAccent
-                              : Colors.redAccent, // สีพื้นหลังวงกลม
+                              : Colors.redAccent,
                       child: Icon(
-                        Icons.person, // ไอคอนที่ต้องการ
-                        color: Colors.white, // สีของไอคอน
-                        size: 90,
+                        Icons.person,
+                        color: Colors.white,
+                        size: 90.w, // Use w for icon size
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 30),
+                SizedBox(height: 30.h), // Use h for vertical spacing
                 Text(
                   widget.user.role == "member"
                       ? "สถานะ: สมาชิก"
                       : "สถานะ: ผู้ดูแลระบบ",
-                  style: const TextStyle(
-                    fontSize: 16,
+                  style: TextStyle(
+                    fontSize: 16.sp, // Use sp for font size
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(height: 30),
+                SizedBox(height: 30.h), // Use h for vertical spacing
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text('Username', style: TextStyle(fontSize: 16)),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 8.w,
+                        vertical: 8.h,
+                      ), // Use w and h for padding
+                      child: Text(
+                        'Username',
+                        style: TextStyle(fontSize: 16.sp),
+                      ), // Use sp for font size
                     ),
                     buildTextField(usernameCtl),
-                    const SizedBox(height: 15),
+                    SizedBox(height: 15.h), // Use h for vertical spacing
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text('Email'),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 8.w,
+                        vertical: 8.h,
+                      ), // Use w and h for padding
+                      child: Text(
+                        'Email',
+                        style: TextStyle(fontSize: 16.sp),
+                      ), // Use sp for font size
                     ),
                     buildTextField(emailCtl),
-                    const SizedBox(height: 15),
+                    SizedBox(height: 15.h), // Use h for vertical spacing
                   ],
                 ),
               ],
@@ -117,14 +137,23 @@ class _ProfilePageState extends State<ProfilePage> {
       controller: textEditingController,
       readOnly: true,
       decoration: InputDecoration(
-        labelStyle: const TextStyle(color: Colors.grey),
+        labelStyle: TextStyle(
+          color: Colors.grey,
+          fontSize: 16.sp,
+        ), // Use sp for font size
         enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.pink),
-          borderRadius: BorderRadius.circular(30),
+          borderSide: BorderSide(
+            color: Colors.pink,
+            width: 1.w,
+          ), // Use w for border width
+          borderRadius: BorderRadius.circular(30.r), // Use r for radius
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.pink, width: 2),
-          borderRadius: BorderRadius.circular(30),
+          borderSide: BorderSide(
+            color: Colors.pink,
+            width: 2.w,
+          ), // Use w for border width
+          borderRadius: BorderRadius.circular(30.r), // Use r for radius
         ),
       ),
     );

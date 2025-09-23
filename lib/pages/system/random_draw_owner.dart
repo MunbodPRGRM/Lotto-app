@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:lotto_app/config/internal_config.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart'; // Add this import
 
 class RandomDrawOwnerPage extends StatefulWidget {
   const RandomDrawOwnerPage({super.key});
@@ -25,7 +26,7 @@ class _RandomDrawOwnerPageState extends State<RandomDrawOwnerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(100),
+        preferredSize: Size.fromHeight(100.h), // Use h for height
         child: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.white),
@@ -33,36 +34,40 @@ class _RandomDrawOwnerPageState extends State<RandomDrawOwnerPage> {
               Navigator.pop(context);
             },
           ),
-          title: const Text('Draw', style: TextStyle(color: Colors.white)),
+          title: Text(
+            'Draw',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20.sp, // Use sp for font size
+            ),
+          ),
           centerTitle: true,
-          backgroundColor: const Color(0xFFF44336), // สีแดงอมชมพู
+          backgroundColor: const Color(0xFFF44336),
           elevation: 0,
         ),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(16.w), // Use w for padding
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // ส่วนตั้งค่าการจับสลาก
-            const Center(
+            Center(
               child: Text(
                 'Draw Settings',
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 16.sp, // Use sp for font size
                   color: Colors.grey,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h), // Use h for height
 
-            // Dropdown สำหรับประเภทการสุ่ม
             DropdownButtonFormField<String>(
               decoration: InputDecoration(
                 hintText: 'ประเภทการสุ่ม',
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
+                  borderRadius: BorderRadius.circular(10.r), // Use r for radius
                   borderSide: BorderSide.none,
                 ),
                 filled: true,
@@ -72,8 +77,13 @@ class _RandomDrawOwnerPageState extends State<RandomDrawOwnerPage> {
               items:
                   drawModes.entries.map((entry) {
                     return DropdownMenuItem<String>(
-                      value: entry.value, // ส่งค่าไป API
-                      child: Text(entry.key), // แสดงชื่อภาษาไทย
+                      value: entry.value,
+                      child: Text(
+                        entry.key,
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                        ), // Use sp for font size
+                      ),
                     );
                   }).toList(),
               onChanged: (value) {
@@ -83,30 +93,26 @@ class _RandomDrawOwnerPageState extends State<RandomDrawOwnerPage> {
               },
             ),
 
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h), // Use h for height
 
-            // ปุ่ม Draw
             SizedBox(
               width: double.infinity,
-              height: 50,
+              height: 50.h, // Use h for height
               child: ElevatedButton(
                 onPressed: () {
                   if (selectedMode != null) {
-                    previewDraw(
-                      selectedMode!,
-                    ); // ใส่ ! เพื่อบอกว่ามั่นใจว่าไม่ null
+                    previewDraw(selectedMode!);
                   } else {
-                    // ถ้า null อาจแจ้งผู้ใช้เลือกก่อน
                     showDialog(
                       context: context,
                       builder:
                           (_) => AlertDialog(
-                            title: Text("แจ้งเตือน"),
-                            content: Text("กรุณาเลือกประเภทการสุ่มก่อน"),
+                            title: const Text("แจ้งเตือน"),
+                            content: const Text("กรุณาเลือกประเภทการสุ่มก่อน"),
                             actions: [
                               TextButton(
                                 onPressed: () => Navigator.pop(context),
-                                child: Text("OK"),
+                                child: const Text("OK"),
                               ),
                             ],
                           ),
@@ -114,31 +120,35 @@ class _RandomDrawOwnerPageState extends State<RandomDrawOwnerPage> {
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFF44336), // สีแดงอมชมพู
+                  backgroundColor: const Color(0xFFF44336),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+                    borderRadius: BorderRadius.circular(
+                      10.r,
+                    ), // Use r for radius
                   ),
                 ),
-                child: const Text(
+                child: Text(
                   'Draw',
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16.sp, // Use sp for font size
+                  ),
                 ),
               ),
             ),
-            const SizedBox(height: 32),
+            SizedBox(height: 32.h), // Use h for height
 
-            // ส่วนแสดงผลการจับสลาก
-            const Center(
+            Center(
               child: Text(
                 'ผลการจับฉลาก',
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 16.sp, // Use sp for font size
                   color: Colors.grey,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h), // Use h for height
 
             _buildPrizeRow("รางวัลที่ 1", 6, value: previewResults["1"]),
             _buildPrizeRow("รางวัลที่ 2", 6, value: previewResults["2"]),
@@ -146,30 +156,26 @@ class _RandomDrawOwnerPageState extends State<RandomDrawOwnerPage> {
             _buildPrizeRow("เลขท้าย 3 ตัว", 3, value: previewResults["4"]),
             _buildPrizeRow("เลขท้าย 2 ตัว", 2, value: previewResults["5"]),
 
-            const SizedBox(height: 32),
+            SizedBox(height: 32.h), // Use h for height
 
-            // ปุ่ม Submit
             SizedBox(
               width: double.infinity,
-              height: 50,
+              height: 50.h, // Use h for height
               child: ElevatedButton(
                 onPressed: () {
                   if (selectedMode != null) {
-                    confirmDraw(
-                      selectedMode!,
-                    ); // ใส่ ! เพื่อบอกว่ามั่นใจว่าไม่ null
+                    confirmDraw(selectedMode!);
                   } else {
-                    // ถ้า null อาจแจ้งผู้ใช้เลือกก่อน
                     showDialog(
                       context: context,
                       builder:
                           (_) => AlertDialog(
-                            title: Text("แจ้งเตือน"),
-                            content: Text("กรุณาเลือกประเภทการสุ่มก่อน"),
+                            title: const Text("แจ้งเตือน"),
+                            content: const Text("กรุณาเลือกประเภทการสุ่มก่อน"),
                             actions: [
                               TextButton(
                                 onPressed: () => Navigator.pop(context),
-                                child: Text("OK"),
+                                child: const Text("OK"),
                               ),
                             ],
                           ),
@@ -177,15 +183,17 @@ class _RandomDrawOwnerPageState extends State<RandomDrawOwnerPage> {
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFF44336), // สีแดงอมชมพู
+                  backgroundColor: const Color(0xFFF44336),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25.0),
+                    borderRadius: BorderRadius.circular(
+                      25.r,
+                    ), // Use r for radius
                   ),
                 ),
-                child: const Text(
+                child: Text(
                   'Submit',
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 18.sp, // Use sp for font size
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
@@ -200,34 +208,44 @@ class _RandomDrawOwnerPageState extends State<RandomDrawOwnerPage> {
 
   Widget _buildPrizeRow(String title, int numberOfBoxes, {String? value}) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: EdgeInsets.symmetric(
+        vertical: 8.h,
+      ), // Use h for vertical padding
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: 120,
-            child: Text(title, style: const TextStyle(fontSize: 16)),
+            width: 120.w, // Use w for width
+            child: Text(
+              title,
+              style: TextStyle(fontSize: 16.sp), // Use sp for font size
+            ),
           ),
-          const SizedBox(width: 8),
+          SizedBox(width: 8.w), // Use w for width
           Expanded(
             child: Wrap(
-              spacing: 8.0,
-              runSpacing: 8.0,
+              spacing: 8.w, // Use w for horizontal spacing
+              runSpacing: 8.h, // Use h for vertical spacing
               children: List.generate(
                 numberOfBoxes,
                 (index) => Container(
-                  width: 32,
-                  height: 32,
+                  width: 32.w, // Use w for width
+                  height: 32.h, // Use h for height
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     color: Colors.grey[300],
-                    borderRadius: BorderRadius.circular(5.0),
+                    borderRadius: BorderRadius.circular(
+                      5.r,
+                    ), // Use r for radius
                   ),
                   child:
                       value != null && index < value.length
                           ? Text(
                             value[index],
-                            style: const TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16.sp, // Use sp for font size
+                            ),
                           )
                           : null,
                 ),
@@ -244,7 +262,7 @@ class _RandomDrawOwnerPageState extends State<RandomDrawOwnerPage> {
     final response = await http.post(
       url,
       headers: {"Content-Type": "application/json"},
-      body: jsonEncode({"mode": mode}), // "sold_only" หรือ "all_numbers"
+      body: jsonEncode({"mode": mode}),
     );
 
     if (response.statusCode == 200) {
@@ -256,7 +274,6 @@ class _RandomDrawOwnerPageState extends State<RandomDrawOwnerPage> {
       final data = jsonDecode(response.body);
       String errorMessage = data["error"] ?? "Unexpected error";
 
-      // ✅ ถ้ามี error จาก backend -> showDialog
       if (mounted) {
         showDialog(
           context: context,
@@ -273,14 +290,12 @@ class _RandomDrawOwnerPageState extends State<RandomDrawOwnerPage> {
               ),
         );
       }
-
       debugPrint("Error: ${response.body}");
     }
   }
 
   Future<void> confirmDraw(String mode) async {
     if (previewResults.isEmpty) {
-      // ถ้าไม่มีผล preview -> แจ้งเตือน
       showDialog(
         context: context,
         builder:
@@ -295,7 +310,7 @@ class _RandomDrawOwnerPageState extends State<RandomDrawOwnerPage> {
               ],
             ),
       );
-      return; // หยุดฟังก์ชัน
+      return;
     }
 
     final url = Uri.parse("$API_ENDPOINT/draw/confirm");
@@ -306,16 +321,18 @@ class _RandomDrawOwnerPageState extends State<RandomDrawOwnerPage> {
     );
 
     if (response.statusCode == 200) {
-      // final data = jsonDecode(response.body);
       showDialog(
         context: context,
         builder:
             (_) => AlertDialog(
               title: const Text("บันทึกสำเร็จ"),
-              content: Text("ยืนยันสร้างผลรางวัลเรียบร้อย"),
+              content: const Text("ยืนยันสร้างผลรางวัลเรียบร้อย"),
               actions: [
                 TextButton(
-                  onPressed: () => Navigator.pop(context),
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  },
                   child: const Text("OK"),
                 ),
               ],

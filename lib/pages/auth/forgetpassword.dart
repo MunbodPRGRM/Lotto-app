@@ -1,8 +1,8 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:lotto_app/config/internal_config.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ForgetPassword extends StatefulWidget {
   const ForgetPassword({super.key});
@@ -33,242 +33,220 @@ class _ForgetPasswordState extends State<ForgetPassword> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: 50),
+                SizedBox(height: 50.h),
                 SizedBox(
-                  width: 354,
-                  height: 50,
+                  width: 354.w,
+                  height: 50.h,
                   child: TextField(
                     controller: nameCtl,
-                    style: const TextStyle(
-                      color: Colors.white, // ตัวอักษรสีขาว
-                      fontSize: 18,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18.sp,
                       fontFamily: 'Roboto',
                     ),
                     decoration: InputDecoration(
                       prefixIcon: Padding(
-                        padding: const EdgeInsets.only(left: 20, right: 9),
+                        padding: EdgeInsets.only(left: 20.w, right: 9.w),
                         child: Image.asset(
                           'assets/images/person_icon.png',
-                          width: 24,
-                          height: 27,
+                          width: 24.w,
+                          height: 27.h,
                         ),
                       ),
                       hintText: 'Username',
-                      hintStyle: const TextStyle(
-                        color: Colors.white, // สี hint
+                      hintStyle: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18.sp,
                       ),
                       filled: true,
-                      fillColor: Colors.transparent, // ทำให้ใส
+                      fillColor: Colors.transparent,
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide: const BorderSide(
-                          color: Colors.white,
-                          width: 2,
-                        ), // ขอบสีขาว
+                        borderRadius: BorderRadius.circular(30.r),
+                        borderSide: BorderSide(color: Colors.white, width: 2.w),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide: const BorderSide(
-                          color: Colors.white,
-                          width: 3,
-                        ), // ขอบหนาขึ้นตอน focus
+                        borderRadius: BorderRadius.circular(30.r),
+                        borderSide: BorderSide(color: Colors.white, width: 3.w),
                       ),
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 15,
-                        vertical: 15,
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: 15.w,
+                        vertical: 15.h,
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 30),
+                SizedBox(height: 30.h),
                 SizedBox(
-                  width: 354,
-                  height: 50,
+                  width: 354.w,
+                  height: 50.h,
                   child: TextField(
                     controller: emailCtl,
-                    style: const TextStyle(
-                      color: Colors.white, // ตัวอักษรสีขาว
-                      fontSize: 18,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18.sp,
                       fontFamily: 'Roboto',
                     ),
                     decoration: InputDecoration(
                       prefixIcon: Padding(
-                        padding: const EdgeInsets.only(left: 20, right: 9),
+                        padding: EdgeInsets.only(left: 20.w, right: 9.w),
                         child: Image.asset(
                           'assets/images/email_icon.png',
-                          width: 24,
-                          height: 27,
+                          width: 24.w,
+                          height: 27.h,
                         ),
                       ),
                       hintText: 'Email',
-                      hintStyle: const TextStyle(
-                        color: Colors.white, // สี hint
+                      hintStyle: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18.sp,
                       ),
                       filled: true,
-                      fillColor: Colors.transparent, // ทำให้ใส
+                      fillColor: Colors.transparent,
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide: const BorderSide(
-                          color: Colors.white,
-                          width: 2,
-                        ), // ขอบสีขาว
+                        borderRadius: BorderRadius.circular(30.r),
+                        borderSide: BorderSide(color: Colors.white, width: 2.w),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide: const BorderSide(
-                          color: Colors.white,
-                          width: 3,
-                        ), // ขอบหนาขึ้นตอน focus
+                        borderRadius: BorderRadius.circular(30.r),
+                        borderSide: BorderSide(color: Colors.white, width: 3.w),
                       ),
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 15,
-                        vertical: 15,
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: 15.w,
+                        vertical: 15.h,
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 30),
+                SizedBox(height: 30.h),
                 SizedBox(
-                  width: 354,
-                  height: 50,
+                  width: 354.w,
+                  height: 50.h,
                   child: TextField(
                     controller: passwordCtl,
                     obscureText: true,
-                    style: const TextStyle(
-                      color: Colors.white, // ตัวอักษรสีขาว
-                      fontSize: 18,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18.sp,
                       fontFamily: 'Roboto',
                     ),
                     decoration: InputDecoration(
                       prefixIcon: Padding(
-                        padding: const EdgeInsets.only(left: 15, right: 9),
+                        padding: EdgeInsets.only(left: 15.w, right: 9.w),
                         child: Image.asset(
                           'assets/images/password_key.png',
-                          width: 35,
-                          height: 35,
+                          width: 35.w,
+                          height: 35.h,
                           color: Colors.white,
                         ),
                       ),
                       hintText: 'Password',
-                      hintStyle: const TextStyle(
-                        color: Colors.white, // สี hint
+                      hintStyle: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18.sp,
                       ),
                       filled: true,
-                      fillColor: Colors.transparent, // ทำให้ใส
+                      fillColor: Colors.transparent,
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide: const BorderSide(
-                          color: Colors.white,
-                          width: 2,
-                        ), // ขอบสีขาว
+                        borderRadius: BorderRadius.circular(30.r),
+                        borderSide: BorderSide(color: Colors.white, width: 2.w),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide: const BorderSide(
-                          color: Colors.white,
-                          width: 3,
-                        ), // ขอบหนาขึ้นตอน focus
+                        borderRadius: BorderRadius.circular(30.r),
+                        borderSide: BorderSide(color: Colors.white, width: 3.w),
                       ),
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 15,
-                        vertical: 15,
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: 15.w,
+                        vertical: 15.h,
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 30),
+                SizedBox(height: 30.h),
                 SizedBox(
-                  width: 354,
-                  height: 50,
+                  width: 354.w,
+                  height: 50.h,
                   child: TextField(
                     controller: confirmPasswordCtl,
                     obscureText: true,
-                    style: const TextStyle(
-                      color: Colors.white, // ตัวอักษรสีขาว
-                      fontSize: 18,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18.sp,
                       fontFamily: 'Roboto',
                     ),
                     decoration: InputDecoration(
                       prefixIcon: Padding(
-                        padding: const EdgeInsets.only(left: 15, right: 9),
+                        padding: EdgeInsets.only(left: 15.w, right: 9.w),
                         child: Image.asset(
                           'assets/images/password_key.png',
-                          width: 35,
-                          height: 35,
+                          width: 35.w,
+                          height: 35.h,
                           color: Colors.white,
                         ),
                       ),
                       hintText: 'Confirm Password',
-                      hintStyle: const TextStyle(
-                        color: Colors.white, // สี hint
+                      hintStyle: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18.sp,
                       ),
                       filled: true,
-                      fillColor: Colors.transparent, // ทำให้ใส
+                      fillColor: Colors.transparent,
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide: const BorderSide(
-                          color: Colors.white,
-                          width: 2,
-                        ), // ขอบสีขาว
+                        borderRadius: BorderRadius.circular(30.r),
+                        borderSide: BorderSide(color: Colors.white, width: 2.w),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide: const BorderSide(
-                          color: Colors.white,
-                          width: 3,
-                        ), // ขอบหนาขึ้นตอน focus
+                        borderRadius: BorderRadius.circular(30.r),
+                        borderSide: BorderSide(color: Colors.white, width: 3.w),
                       ),
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 15,
-                        vertical: 15,
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: 15.w,
+                        vertical: 15.h,
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 30),
+                SizedBox(height: 30.h),
                 SizedBox(
-                  width: 354,
-                  height: 50,
+                  width: 354.w,
+                  height: 50.h,
                   child: ElevatedButton(
-                    onPressed: () {
-                      resetPassword();
-                    },
+                    onPressed: resetPassword,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: BorderRadius.circular(30.r),
                       ),
                     ),
-                    child: const Text(
+                    child: Text(
                       'Confirm',
                       style: TextStyle(
-                        color: Color(0xFFFF1843),
-                        fontSize: 20,
+                        color: const Color(0xFFFF1843),
+                        fontSize: 20.sp,
                         fontFamily: 'Roboto',
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 300),
+                SizedBox(height: 300.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
+                    Text(
                       "Did you have an account?",
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 20,
+                        fontSize: 20.sp,
                         fontFamily: 'Roboto',
                       ),
                     ),
                     TextButton(
                       onPressed: login,
-                      child: const Text(
+                      child: Text(
                         'Login',
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
-                          fontSize: 20,
+                          fontSize: 20.sp,
                           fontFamily: 'Roboto',
                         ),
                       ),

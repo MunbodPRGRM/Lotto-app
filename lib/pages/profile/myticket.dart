@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:lotto_app/config/internal_config.dart';
@@ -7,6 +8,7 @@ import 'package:lotto_app/model/response/lotto_check_get_res.dart';
 import 'package:lotto_app/model/response/lotto_redeem_post.res.dart';
 import 'package:lotto_app/model/response/user_login_post_res.dart';
 import 'package:lotto_app/model/response/user_lotto_get_res.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart'; // เพิ่ม import นี้
 
 class MyTicketsPage extends StatefulWidget {
   final User user;
@@ -26,22 +28,19 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-
     loadData = getAllUserLotto();
   }
 
   @override
   Widget build(BuildContext context) {
-    // ถ้าเป็น owner → ไม่เห็น lotto
     if (widget.user.role == "owner") {
       return Scaffold(
         appBar: AppBar(
-          title: const Text(
+          title: Text(
             "My Tickets",
             style: TextStyle(
-              fontSize: 20,
+              fontSize: 20.sp, // ปรับขนาด font
               fontWeight: FontWeight.bold,
               color: Colors.black,
             ),
@@ -50,17 +49,23 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
           automaticallyImplyLeading: false,
           foregroundColor: Colors.black,
         ),
-        body: const Center(
+        body: Center(
           child: Text(
             "ผู้ดูแลระบบไม่ควรซื้อได้",
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              fontSize: 16.sp,
+              fontWeight: FontWeight.bold,
+            ), // ปรับขนาด font
           ),
         ),
       );
     }
     return Scaffold(
       appBar: AppBar(
-        title: const Text("My Tickets"),
+        title: Text(
+          "My Tickets",
+          style: TextStyle(fontSize: 20.sp),
+        ), // ปรับขนาด font
         centerTitle: true,
         automaticallyImplyLeading: false,
         foregroundColor: Colors.black,
@@ -69,7 +74,7 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
         children: [
           // Search bar
           Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: EdgeInsets.all(12.w), // ปรับ padding
             child: TextField(
               decoration: InputDecoration(
                 hintText: "Search",
@@ -77,7 +82,7 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
                 filled: true,
                 fillColor: Colors.grey.shade200,
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(25),
+                  borderRadius: BorderRadius.circular(25.r), // ปรับขนาด radius
                   borderSide: BorderSide.none,
                 ),
               ),
@@ -94,7 +99,7 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
 
           Expanded(
             child: ListView.builder(
-              padding: const EdgeInsets.all(12),
+              padding: EdgeInsets.all(12.w), // ปรับ padding
               itemCount: filteredUserLotto.length,
               itemBuilder: (context, index) {
                 final lotto = filteredUserLotto[index];
@@ -104,16 +109,18 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
                     checkUserLotto(lotto.number);
                   },
                   child: Container(
-                    height: 180,
-                    margin: const EdgeInsets.only(bottom: 12),
+                    height: 180.h, // ปรับความสูง
+                    margin: EdgeInsets.only(bottom: 12.h), // ปรับ margin
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(
+                        12.r,
+                      ), // ปรับขนาด radius
                       boxShadow: [
                         BoxShadow(
                           color: Colors.grey.withOpacity(0.2),
-                          blurRadius: 5,
-                          offset: const Offset(0, 3),
+                          blurRadius: 5.r, // ปรับขนาด blur
+                          offset: Offset(0, 3.h), // ปรับขนาด offset
                         ),
                       ],
                     ),
@@ -121,13 +128,13 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
                       children: [
                         // โลโก้ + ราคา
                         Container(
-                          width: 200,
-                          height: 180,
+                          width: 200.w, // ปรับความกว้าง
+                          height: 180.h, // ปรับความสูง
                           decoration: BoxDecoration(
-                            color: Color(0xFFEDF4D0),
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(12),
-                              bottomLeft: Radius.circular(12),
+                            color: const Color(0xFFEDF4D0),
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(12.r),
+                              bottomLeft: Radius.circular(12.r),
                             ),
                           ),
                           child: Stack(
@@ -136,14 +143,14 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
                               // รูป
                               Image.asset(
                                 'assets/images/lotto_icon.png',
-                                width: 150,
-                                height: 150,
+                                width: 150.w, // ปรับความกว้าง
+                                height: 150.h, // ปรับความสูง
                               ),
 
                               // ราคา (ทับบนรูป)
                               Positioned(
                                 bottom: 0,
-                                left: 10,
+                                left: 10.w, // ปรับระยะห่าง
                                 child: Column(
                                   children: [
                                     Text(
@@ -151,7 +158,7 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
                                       style: TextStyle(
                                         color: Colors.pink,
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 18,
+                                        fontSize: 18.sp, // ปรับขนาด font
                                         height: 0.5,
                                       ),
                                     ),
@@ -160,7 +167,7 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
                                       style: TextStyle(
                                         color: Colors.pink,
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 14,
+                                        fontSize: 14.sp, // ปรับขนาด font
                                       ),
                                     ),
                                   ],
@@ -173,35 +180,55 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
                         // ข้อมูลลอตเตอรี่
                         Expanded(
                           child: Container(
-                            padding: const EdgeInsets.all(12),
+                            padding: EdgeInsets.all(12.w), // ปรับ padding
                             decoration: BoxDecoration(
-                              color: Color(0xFFD9D9D9),
-                              borderRadius: const BorderRadius.only(
-                                topRight: Radius.circular(12),
-                                bottomRight: Radius.circular(12),
+                              color: const Color(0xFFD9D9D9),
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(12.r),
+                                bottomRight: Radius.circular(12.r),
                               ),
                             ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(
-                                  lotto.number,
-                                  style: TextStyle(
-                                    fontSize: 30,
-                                    fontWeight: FontWeight.bold,
+                                Flexible(
+                                  child: AutoSizeText(
+                                    lotto.number,
+                                    style: TextStyle(
+                                      fontSize: 30.sp, // 12. ปรับ font size
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    minFontSize: 15,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
-                                SizedBox(height: 25),
-                                Text(
-                                  "ซื้อเบาๆ รวยหนักๆ\nซื้อหนักๆ รวยเบาๆ",
-                                  style: TextStyle(fontSize: 12),
+                                SizedBox(height: 12.h), // ปรับ height
+                                Flexible(
+                                  child: AutoSizeText(
+                                    "ซื้อเบาๆ รวยหนักๆ\nซื้อหนักๆ รวยเบาๆ",
+                                    style: TextStyle(
+                                      fontSize: 12.sp,
+                                    ), // 13. ปรับ font size
+                                    minFontSize: 6,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                 ),
-                                SizedBox(height: 30),
-                                Text(
-                                  "โชคดีมีชัย",
-                                  style: TextStyle(fontSize: 12),
-                                ),
+                                SizedBox(height: 15.h), // ปรับ height
+                                Flexible(
+                                  child: AutoSizeText(
+                                    "โชคดีมีชัย",
+                                    style: TextStyle(fontSize: 12.sp),
+                                    minFontSize:
+                                        6, // ขนาดฟอนต์เล็กสุดที่อนุญาตให้ย่อได้
+                                    maxLines: 1, // จำนวนบรรทัดสูงสุดที่ต้องการ
+                                    overflow:
+                                        TextOverflow
+                                            .ellipsis, // เพิ่มเติมในกรณีที่ข้อความยังล้น
+                                  ),
+                                ), // 14. ปรับ font size
                               ],
                             ),
                           ),
@@ -236,7 +263,6 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
     }
   }
 
-  // ===== ส่วน checkUserLotto ปรับใหม่ =====
   Future<void> checkUserLotto(String lottoNumber) async {
     try {
       final res = await http.get(
@@ -244,16 +270,12 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
       );
 
       if (res.statusCode == 200) {
-        // แปลง JSON เป็น List<LottoCheckGetResponse>
         final results = lottoCheckGetResponseFromJson(res.body);
-
-        // ตรวจว่าเลขนี้ถูกรางวัลหรือไม่
         final prize =
             results.where((r) => r.number == lottoNumber).isNotEmpty
                 ? results.where((r) => r.number == lottoNumber).first
                 : null;
 
-        // แสดง Dialog
         showDialog(
           context: context,
           builder: (context) {
@@ -266,18 +288,15 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
                       )
                       : const Text('เลขนี้ไม่ได้รางวัล'),
               actions: [
-                // ปุ่มปิด
                 TextButton(
                   onPressed: () => Navigator.pop(context),
                   child: const Text('ปิด'),
                 ),
-
-                // ปุ่มขึ้นเงิน (ถ้าได้รางวัล)
                 if (prize != null)
                   TextButton(
                     onPressed: () async {
-                      Navigator.pop(context); // ปิด dialog เดิม
-                      await redeemLotto(lottoNumber); // เรียกฟังก์ชันขึ้นเงิน
+                      Navigator.pop(context);
+                      await redeemLotto(lottoNumber);
                     },
                     child: const Text(
                       'แลกรางวัล',
@@ -296,7 +315,6 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
     }
   }
 
-  // ===== ฟังก์ชันขึ้นเงินใหม่ =====
   Future<void> redeemLotto(String lottoNumber) async {
     try {
       final res = await http.post(
@@ -307,8 +325,6 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
 
       if (res.statusCode == 200) {
         final result = LottoRedeemPostResponse.fromJson(json.decode(res.body));
-
-        // แสดงผลลัพธ์หลังขึ้นเงินเสร็จ
         showDialog(
           context: context,
           builder:
@@ -319,7 +335,7 @@ class _MyTicketsPageState extends State<MyTicketsPage> {
                   TextButton(
                     onPressed: () {
                       Navigator.pop(context);
-                      getAllUserLotto(); // รีโหลดลอตเตอรี่ใหม่
+                      getAllUserLotto();
                     },
                     child: const Text("ปิด"),
                   ),

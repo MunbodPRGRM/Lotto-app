@@ -1,9 +1,9 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:lotto_app/config/internal_config.dart';
 import 'package:lotto_app/model/response/user_login_post_res.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart'; // Import ScreenUtil
 
 class SystemOwnerPage extends StatefulWidget {
   final User user;
@@ -32,14 +32,14 @@ class _SystemOwnerPageState extends State<SystemOwnerPage> {
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(16.w), // ใช้ .w สำหรับ padding
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // ปุ่ม "Reset Draw"
               SizedBox(
                 width: double.infinity,
-                height: 50,
+                height: 50.h, // ใช้ .h สำหรับ height
                 child: ElevatedButton(
                   onPressed: () {
                     confirmDelete();
@@ -47,25 +47,26 @@ class _SystemOwnerPageState extends State<SystemOwnerPage> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFF44336), // สีแดงอมชมพู
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                      borderRadius: BorderRadius.circular(
+                        10.r,
+                      ), // ใช้ .r สำหรับ borderRadius
                     ),
                   ),
-                  child: const Text(
+                  child: Text(
                     'Reset Draw',
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 18.sp, // ใช้ .sp สำหรับ fontSize
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
                   ),
                 ),
               ),
-              const SizedBox(height: 16),
-
+              SizedBox(height: 16.h), // ใช้ .h สำหรับช่องว่าง
               // ปุ่ม "Reset the WORLD!!!!"
               SizedBox(
                 width: double.infinity,
-                height: 50,
+                height: 50.h, // ใช้ .h สำหรับ height
                 child: ElevatedButton(
                   onPressed: () {
                     resetSystem();
@@ -73,13 +74,15 @@ class _SystemOwnerPageState extends State<SystemOwnerPage> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFF44336), // สีแดงอมชมพู
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                      borderRadius: BorderRadius.circular(
+                        10.r,
+                      ), // ใช้ .r สำหรับ borderRadius
                     ),
                   ),
-                  child: const Text(
+                  child: Text(
                     'Reset the WORLD!!!!',
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 18.sp, // ใช้ .sp สำหรับ fontSize
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
@@ -124,7 +127,7 @@ class _SystemOwnerPageState extends State<SystemOwnerPage> {
       final response = await http.post(
         url,
         headers: {"Content-Type": "application/json"},
-        body: '{"owner_id": ${widget.user.id}}',
+        body: json.encode({"owner_id": widget.user.id}),
       );
 
       if (response.statusCode == 200) {

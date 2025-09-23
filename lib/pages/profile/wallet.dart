@@ -1,11 +1,10 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart'; // Import ScreenUtil
 import 'package:http/http.dart' as http;
 import 'package:lotto_app/config/internal_config.dart';
 import 'package:lotto_app/model/response/user_login_post_res.dart';
 import 'package:lotto_app/model/response/wallet_balance_get_res.dart';
-// import 'package:lotto_app/pages/other/search_bank.dart';
 
 class WalletPage extends StatefulWidget {
   final User user;
@@ -23,7 +22,6 @@ class _WalletPageState extends State<WalletPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     loadBalance();
   }
@@ -42,80 +40,29 @@ class _WalletPageState extends State<WalletPage> {
         elevation: 0,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(16.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 16),
-            // Total Money
+            SizedBox(height: 16.h),
             Center(
               child: const Text(
                 'Total Money',
                 style: TextStyle(fontSize: 16, color: Colors.grey),
               ),
             ),
-
-            const SizedBox(height: 8),
-
+            SizedBox(height: 8.h),
             Center(
               child: Text(
                 '${_balance.toString()} บาท',
                 style: TextStyle(
-                  fontSize: 32,
+                  fontSize: 32.sp,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),
               ),
             ),
-
-            const SizedBox(height: 32),
-
-            // เลือกธนาคาร
-            // const Text(
-            //   'เลือกธนาคาร',
-            //   style: TextStyle(
-            //     fontSize: 16,
-            //     color: Colors.black,
-            //     fontWeight: FontWeight.bold,
-            //   ),
-            // ),
-            // const SizedBox(height: 10),
-
-            // InkWell(
-            //   onTap: () {
-            //     Navigator.push(
-            //       context,
-            //       MaterialPageRoute(builder: (context) => SearchBankPage()),
-            //     );
-            //   },
-            //   child: Container(
-            //     padding: const EdgeInsets.symmetric(
-            //       horizontal: 16.0,
-            //       vertical: 12.0,
-            //     ),
-
-            //     decoration: BoxDecoration(
-            //       color: Colors.grey[200],
-            //       borderRadius: BorderRadius.circular(15.0),
-            //     ),
-            //     child: Row(
-            //       children: const [
-            //         Icon(Icons.account_balance_outlined, color: Colors.grey),
-            //         SizedBox(width: 10),
-            //         Expanded(
-            //           child: Text(
-            //             'เลือกธนาคารของคุณ',
-            //             style: TextStyle(fontSize: 16, color: Colors.grey),
-            //           ),
-            //         ),
-            //         Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
-            //       ],
-            //     ),
-            //   ),
-            // ),
-            const SizedBox(height: 32),
-
-            // ปุ่มเลือกจำนวนเงิน
+            SizedBox(height: 32.h),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -127,46 +74,42 @@ class _WalletPageState extends State<WalletPage> {
                 _buildAmountButton(1000),
               ],
             ),
-
-            const SizedBox(height: 32),
-
-            // จำนวนเงินที่เลือก
-            const Center(
-              child: Text(
+            SizedBox(height: 32.h),
+            Center(
+              child: const Text(
                 'จำนวนเงิน',
                 style: TextStyle(fontSize: 16, color: Colors.grey),
               ),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8.h),
             Center(
               child: Text(
                 '$_selectedAmount บาท',
-                style: const TextStyle(
-                  fontSize: 32,
+                style: TextStyle(
+                  fontSize: 32.sp,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),
               ),
             ),
-            const Spacer(), // ใช้ Spacer เพื่อดันปุ่มไปด้านล่าง
-            // ปุ่มยืนยัน
+            const Spacer(),
             SizedBox(
               width: double.infinity,
-              height: 50,
+              height: 50.h,
               child: ElevatedButton(
                 onPressed: () {
                   topUp(_selectedAmount);
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFF06292), // สีชมพู
+                  backgroundColor: const Color(0xFFF06292),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25.0),
+                    borderRadius: BorderRadius.circular(25.r),
                   ),
                 ),
-                child: const Text(
+                child: Text(
                   'ยืนยัน',
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 18.sp,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
@@ -179,7 +122,6 @@ class _WalletPageState extends State<WalletPage> {
     );
   }
 
-  // ฟังก์ชันช่วยสร้างปุ่มเลือกจำนวนเงิน
   Widget _buildAmountButton(int amount) {
     bool isSelected = (_selectedAmount == amount);
     return GestureDetector(
@@ -189,27 +131,21 @@ class _WalletPageState extends State<WalletPage> {
         });
       },
       child: Container(
-        width: 50,
-        height: 40,
+        width: 50.w,
+        height: 40.h,
         decoration: BoxDecoration(
-          color:
-              isSelected
-                  ? const Color(0xFF5C6BC0)
-                  : Colors.grey[200], // สีม่วงเข้ม
-          borderRadius: BorderRadius.circular(20.0),
+          color: isSelected ? const Color(0xFF5C6BC0) : Colors.grey[200],
+          borderRadius: BorderRadius.circular(20.r),
           border:
               isSelected
-                  ? Border.all(
-                    color: Colors.blue.shade200,
-                    width: 2,
-                  ) // เพิ่มขอบเมื่อเลือก
+                  ? Border.all(color: Colors.blue.shade200, width: 2.w)
                   : null,
         ),
         child: Center(
           child: Text(
             '$amount',
             style: TextStyle(
-              fontSize: 16,
+              fontSize: 16.sp,
               fontWeight: FontWeight.bold,
               color: isSelected ? Colors.white : Colors.black87,
             ),
@@ -224,58 +160,17 @@ class _WalletPageState extends State<WalletPage> {
       final res = await http.get(
         Uri.parse("$API_ENDPOINT/wallet/${widget.user.id}/balance"),
       );
-
       if (res.statusCode == 200) {
         final data = walletBalanceGetResponseFromJson(res.body);
         setState(() {
           _balance = data.balance;
         });
       } else {
-        print("Failed to load balance: ${res.body}");
+        debugPrint("Failed to load balance: ${res.body}");
       }
     } catch (e) {
-      print("Error: $e");
+      debugPrint("Error: $e");
     }
-  }
-
-  Future<void> showTopUpDialog() async {
-    final controller = TextEditingController();
-
-    await showDialog(
-      context: context,
-      builder:
-          (_) => AlertDialog(
-            title: const Text("เติมเงิน"),
-            content: TextField(
-              controller: controller,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: "จำนวนเงิน",
-                border: OutlineInputBorder(),
-              ),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context), // ปิด popup
-                child: const Text("ยกเลิก"),
-              ),
-              TextButton(
-                onPressed: () async {
-                  final text = controller.text;
-                  if (text.isEmpty) return;
-
-                  final amount = int.tryParse(text);
-                  if (amount == null || amount <= 0) return;
-
-                  Navigator.pop(context); // ปิด popup ก่อน
-
-                  await topUp(amount); // เรียก API เติมเงิน
-                },
-                child: const Text("ยืนยัน"),
-              ),
-            ],
-          ),
-    );
   }
 
   Future<void> topUp(int amount) async {
@@ -291,10 +186,8 @@ class _WalletPageState extends State<WalletPage> {
         setState(() {
           _balance = data["balance"];
         });
-
         loadBalance();
 
-        // popup แจ้งผลลัพธ์
         showDialog(
           context: context,
           builder:
