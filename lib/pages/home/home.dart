@@ -4,6 +4,7 @@ import 'package:lotto_app/config/internal_config.dart';
 import 'package:lotto_app/model/response/user_login_post_res.dart';
 import 'package:lotto_app/model/response/wallet_balance_get_res.dart';
 import 'package:lotto_app/pages/profile/wallet.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart'; // Import ScreenUtil
 
 class HomePage extends StatefulWidget {
   final User user;
@@ -27,7 +28,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     loadBalance();
   }
@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
+          padding: EdgeInsets.all(16.w), // ใช้ .w สำหรับ padding
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -50,61 +50,63 @@ class _HomePageState extends State<HomePage> {
                       Text(
                         "Hello ${widget.user.username}",
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 20.sp, // ใช้ .sp สำหรับ fontSize
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(height: 4),
+                      SizedBox(height: 4.h), // ใช้ .h สำหรับช่องว่าง
                       Text(
                         "Good morning, remember to save today 💰",
-                        style: TextStyle(color: Colors.grey),
+                        style: TextStyle(color: Colors.grey, fontSize: 14.sp),
                       ),
                     ],
                   ),
-                  const CircleAvatar(
-                    radius: 20,
-                    backgroundColor: Colors.blueAccent, // สีพื้นหลังวงกลม
+                  CircleAvatar(
+                    radius: 20.r, // ใช้ .r สำหรับ radius
+                    backgroundColor: Colors.blueAccent,
                     child: Icon(
-                      Icons.person, // ไอคอนที่ต้องการ
-                      color: Colors.white, // สีของไอคอน
+                      Icons.person,
+                      color: Colors.white,
+                      size: 20.sp, // ปรับขนาดไอคอน
                     ),
                   ),
                 ],
               ),
-
-              const SizedBox(height: 20),
-
+              SizedBox(height: 20.h), // ใช้ .h สำหรับช่องว่าง
               /// Total Money
               Center(
                 child: Container(
-                  width: 392,
-                  height: 180,
+                  width: 392.w, // ใช้ .w สำหรับ width
+                  height: 180.h, // ใช้ .h สำหรับ height
                   decoration: BoxDecoration(
-                    color: Color(0xFFFF607D),
-                    borderRadius: BorderRadius.circular(20), // มุมโค้งมน
+                    color: const Color(0xFFFF607D),
+                    borderRadius: BorderRadius.circular(
+                      20.r,
+                    ), // ใช้ .r สำหรับ borderRadius
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.2), // สีเงา
-                        blurRadius: 10, // ความฟุ้งของเงา
-                        offset: const Offset(0, 5), // ตำแหน่งเงา (x, y)
+                        color: Colors.black.withOpacity(0.2),
+                        blurRadius: 10.r, // ใช้ .r สำหรับ blurRadius
+                        offset: Offset(0, 5.h), // ใช้ .h สำหรับ offset
                       ),
                     ],
                   ),
                   child: Column(
-                    mainAxisAlignment:
-                        MainAxisAlignment.center, // จัดกลางแนวตั้ง
-                    crossAxisAlignment:
-                        CrossAxisAlignment.center, // จัดกลางแนวนอน
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
                         "Total Money",
-                        style: TextStyle(color: Colors.white70, fontSize: 16),
+                        style: TextStyle(
+                          color: Colors.white70,
+                          fontSize: 16.sp,
+                        ),
                       ),
-                      SizedBox(height: 8),
+                      SizedBox(height: 8.h), // ใช้ .h สำหรับช่องว่าง
                       Text(
                         "${_balance.toString()}.00 Bath",
                         style: TextStyle(
-                          fontSize: 26,
+                          fontSize: 26.sp, // ใช้ .sp สำหรับ fontSize
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
@@ -114,20 +116,18 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
 
-              const SizedBox(height: 43),
-
+              SizedBox(height: 43.h), // ใช้ .h สำหรับช่องว่าง
               /// Subtitle
-              const Text(
+              Text(
                 "Get your money working for you",
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: 14.sp, // ใช้ .sp สำหรับ fontSize
                   fontWeight: FontWeight.w600,
                   color: Colors.black,
                 ),
               ),
 
-              const SizedBox(height: 20),
-
+              SizedBox(height: 20.h), // ใช้ .h สำหรับช่องว่าง
               /// Menu Buttons
               GridView.count(
                 crossAxisCount: 3,
@@ -140,12 +140,15 @@ class _HomePageState extends State<HomePage> {
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Icon(Icons.list_alt, size: 40, color: Colors.black),
-                        SizedBox(height: 6),
+                      children: [
+                        Icon(Icons.list_alt, size: 40.sp, color: Colors.black),
+                        SizedBox(height: 6.h), // ใช้ .h สำหรับช่องว่าง
                         Text(
                           "Lotto",
-                          style: TextStyle(fontSize: 14, color: Colors.black),
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            color: Colors.black,
+                          ),
                         ),
                       ],
                     ),
@@ -165,16 +168,19 @@ class _HomePageState extends State<HomePage> {
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         Icon(
                           Icons.account_balance_wallet,
-                          size: 40,
+                          size: 40.sp,
                           color: Colors.blue,
                         ),
-                        SizedBox(height: 6),
+                        SizedBox(height: 6.h),
                         Text(
                           "Wallet",
-                          style: TextStyle(fontSize: 14, color: Colors.black),
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            color: Colors.black,
+                          ),
                         ),
                       ],
                     ),
@@ -185,16 +191,19 @@ class _HomePageState extends State<HomePage> {
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         Icon(
                           Icons.confirmation_num,
-                          size: 40,
+                          size: 40.sp,
                           color: Colors.pink,
                         ),
-                        SizedBox(height: 6),
+                        SizedBox(height: 6.h),
                         Text(
                           "My Tickets",
-                          style: TextStyle(fontSize: 14, color: Colors.black),
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            color: Colors.black,
+                          ),
                         ),
                       ],
                     ),
@@ -205,16 +214,19 @@ class _HomePageState extends State<HomePage> {
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         Icon(
                           Icons.card_giftcard,
-                          size: 40,
+                          size: 40.sp,
                           color: Colors.amber,
                         ),
-                        SizedBox(height: 6),
+                        SizedBox(height: 6.h),
                         Text(
                           "Redeem",
-                          style: TextStyle(fontSize: 14, color: Colors.black),
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            color: Colors.black,
+                          ),
                         ),
                       ],
                     ),
@@ -225,12 +237,19 @@ class _HomePageState extends State<HomePage> {
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Icon(Icons.person, size: 40, color: Colors.blueAccent),
-                        SizedBox(height: 6),
+                      children: [
+                        Icon(
+                          Icons.person,
+                          size: 40.sp,
+                          color: Colors.blueAccent,
+                        ),
+                        SizedBox(height: 6.h),
                         Text(
                           "Profile",
-                          style: TextStyle(fontSize: 14, color: Colors.black),
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            color: Colors.black,
+                          ),
                         ),
                       ],
                     ),

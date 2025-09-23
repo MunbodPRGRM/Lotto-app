@@ -7,6 +7,7 @@ import 'package:lotto_app/pages/profile/wallet.dart';
 import 'package:lotto_app/pages/system/create_draw_owner.dart';
 import 'package:lotto_app/pages/system/random_draw_owner.dart';
 import 'package:lotto_app/pages/system/system_owner.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeOwner extends StatefulWidget {
   final User user;
@@ -30,7 +31,6 @@ class _HomeOwnerState extends State<HomeOwner> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     loadBalance();
   }
@@ -40,7 +40,7 @@ class _HomeOwnerState extends State<HomeOwner> {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
+          padding: EdgeInsets.all(16.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -53,61 +53,56 @@ class _HomeOwnerState extends State<HomeOwner> {
                       Text(
                         "Hello ${widget.user.username}",
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 20.sp,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(height: 4),
+                      SizedBox(height: 4.h),
                       Text(
                         "Good morning, remember to save today 💰",
-                        style: TextStyle(color: Colors.grey),
+                        style: TextStyle(color: Colors.grey, fontSize: 14.sp),
                       ),
                     ],
                   ),
-                  const CircleAvatar(
-                    radius: 20,
-                    backgroundColor: Colors.redAccent, // สีพื้นหลังวงกลม
-                    child: Icon(
-                      Icons.person, // ไอคอนที่ต้องการ
-                      color: Colors.white, // สีของไอคอน
-                    ),
+                  CircleAvatar(
+                    radius: 20.r,
+                    backgroundColor: Colors.redAccent,
+                    child: Icon(Icons.person, color: Colors.white, size: 20.sp),
                   ),
                 ],
               ),
-
-              const SizedBox(height: 20),
-
-              /// Total Money
+              SizedBox(height: 20.h),
               Center(
                 child: Container(
-                  width: 392,
-                  height: 180,
+                  width: 392.w,
+                  height: 180.h,
                   decoration: BoxDecoration(
-                    color: Color(0xFFFF607D),
-                    borderRadius: BorderRadius.circular(20), // มุมโค้งมน
+                    color: const Color(0xFFFF607D),
+                    borderRadius: BorderRadius.circular(20.r),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.2), // สีเงา
-                        blurRadius: 10, // ความฟุ้งของเงา
-                        offset: const Offset(0, 5), // ตำแหน่งเงา (x, y)
+                        color: Colors.black.withOpacity(0.2),
+                        blurRadius: 10.r,
+                        offset: Offset(0, 5.h),
                       ),
                     ],
                   ),
                   child: Column(
-                    mainAxisAlignment:
-                        MainAxisAlignment.center, // จัดกลางแนวตั้ง
-                    crossAxisAlignment:
-                        CrossAxisAlignment.center, // จัดกลางแนวนอน
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
                         "Total Money",
-                        style: TextStyle(color: Colors.white70, fontSize: 16),
+                        style: TextStyle(
+                          color: Colors.white70,
+                          fontSize: 16.sp,
+                        ),
                       ),
-                      SizedBox(height: 8),
+                      SizedBox(height: 8.h),
                       Text(
                         "${_balance.toString()}.00 Bath",
                         style: TextStyle(
-                          fontSize: 26,
+                          fontSize: 26.sp,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
@@ -116,22 +111,16 @@ class _HomeOwnerState extends State<HomeOwner> {
                   ),
                 ),
               ),
-
-              const SizedBox(height: 43),
-
-              /// Subtitle
-              const Text(
+              SizedBox(height: 43.h),
+              Text(
                 "Get your money working for you",
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: 14.sp,
                   fontWeight: FontWeight.w600,
                   color: Colors.black,
                 ),
               ),
-
-              const SizedBox(height: 20),
-
-              /// Menu Buttons (รวมใน GridView เลย)
+              SizedBox(height: 20.h),
               GridView.count(
                 crossAxisCount: 3,
                 shrinkWrap: true,
@@ -143,12 +132,15 @@ class _HomeOwnerState extends State<HomeOwner> {
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Icon(Icons.list_alt, size: 40, color: Colors.black),
-                        SizedBox(height: 6),
+                      children: [
+                        Icon(Icons.list_alt, size: 40.sp, color: Colors.black),
+                        SizedBox(height: 6.h),
                         Text(
                           "Lotto",
-                          style: TextStyle(fontSize: 14, color: Colors.black),
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            color: Colors.black,
+                          ),
                         ),
                       ],
                     ),
@@ -168,16 +160,19 @@ class _HomeOwnerState extends State<HomeOwner> {
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         Icon(
                           Icons.account_balance_wallet,
-                          size: 40,
+                          size: 40.sp,
                           color: Colors.blue,
                         ),
-                        SizedBox(height: 6),
+                        SizedBox(height: 6.h),
                         Text(
                           "Wallet",
-                          style: TextStyle(fontSize: 14, color: Colors.black),
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            color: Colors.black,
+                          ),
                         ),
                       ],
                     ),
@@ -188,16 +183,19 @@ class _HomeOwnerState extends State<HomeOwner> {
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         Icon(
                           Icons.confirmation_num,
-                          size: 40,
+                          size: 40.sp,
                           color: Colors.pink,
                         ),
-                        SizedBox(height: 6),
+                        SizedBox(height: 6.h),
                         Text(
                           "My Tickets",
-                          style: TextStyle(fontSize: 14, color: Colors.black),
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            color: Colors.black,
+                          ),
                         ),
                       ],
                     ),
@@ -208,16 +206,19 @@ class _HomeOwnerState extends State<HomeOwner> {
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         Icon(
                           Icons.card_giftcard,
-                          size: 40,
+                          size: 40.sp,
                           color: Colors.amber,
                         ),
-                        SizedBox(height: 6),
+                        SizedBox(height: 6.h),
                         Text(
                           "Redeem",
-                          style: TextStyle(fontSize: 14, color: Colors.black),
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            color: Colors.black,
+                          ),
                         ),
                       ],
                     ),
@@ -228,12 +229,19 @@ class _HomeOwnerState extends State<HomeOwner> {
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Icon(Icons.person, size: 40, color: Colors.blueAccent),
-                        SizedBox(height: 6),
+                      children: [
+                        Icon(
+                          Icons.person,
+                          size: 40.sp,
+                          color: Colors.blueAccent,
+                        ),
+                        SizedBox(height: 6.h),
                         Text(
                           "Profile",
-                          style: TextStyle(fontSize: 14, color: Colors.black),
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            color: Colors.black,
+                          ),
                         ),
                       ],
                     ),
@@ -251,16 +259,19 @@ class _HomeOwnerState extends State<HomeOwner> {
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         Icon(
                           Icons.add_circle,
-                          size: 40,
+                          size: 40.sp,
                           color: Colors.greenAccent,
                         ),
-                        SizedBox(height: 6),
+                        SizedBox(height: 6.h),
                         Text(
                           "Create Draw",
-                          style: TextStyle(fontSize: 14, color: Colors.black),
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            color: Colors.black,
+                          ),
                         ),
                       ],
                     ),
@@ -276,16 +287,19 @@ class _HomeOwnerState extends State<HomeOwner> {
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         Icon(
                           Icons.casino,
-                          size: 40,
+                          size: 40.sp,
                           color: Colors.purpleAccent,
                         ),
-                        SizedBox(height: 6),
+                        SizedBox(height: 6.h),
                         Text(
                           "Draw Random",
-                          style: TextStyle(fontSize: 14, color: Colors.black),
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            color: Colors.black,
+                          ),
                         ),
                       ],
                     ),
@@ -302,12 +316,15 @@ class _HomeOwnerState extends State<HomeOwner> {
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Icon(Icons.settings, size: 40, color: Colors.grey),
-                        SizedBox(height: 6),
+                      children: [
+                        Icon(Icons.settings, size: 40.sp, color: Colors.grey),
+                        SizedBox(height: 6.h),
                         Text(
                           "System",
-                          style: TextStyle(fontSize: 14, color: Colors.black),
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            color: Colors.black,
+                          ),
                         ),
                       ],
                     ),
